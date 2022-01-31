@@ -12,12 +12,14 @@
 server:
   port: 8081
 spring:
-    datasource:
-        url: jdbc:postgresql://localhost:5432/mediscreen_sql?serverTimezone=UTC
-        username: admin
-        password: change_me
-        type: org.springframework.jdbc.datasource.SingleConnectionDataSource
-    jpa:
-        hibernate:
-            ddl-auto: none
-            show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mediscreen_sql?serverTimezone=UTC
+    username: admin
+    password: change_me
+    type: org.springframework.jdbc.datasource.SingleConnectionDataSource
+  jpa:
+    hibernate:
+      ddl-auto: none
+      show-sql: true
+  application:
+    name: patients-api

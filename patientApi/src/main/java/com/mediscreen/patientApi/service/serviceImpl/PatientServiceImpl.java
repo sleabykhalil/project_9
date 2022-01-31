@@ -17,7 +17,7 @@ public class PatientServiceImpl implements PatientService {
      * Add or update Patient
      *
      * @param patient to be add or update
-     * @return patient after add or update
+     * @return patients after add or update
      */
     @Override
     public Patient save(Patient patient) {
@@ -27,7 +27,7 @@ public class PatientServiceImpl implements PatientService {
     /**
      * Get Patient By Id
      * @param patientId Patient Id
-     * @return patient
+     * @return patients
      */
     @Override
     public Patient getPatientById(String patientId) {
@@ -35,10 +35,10 @@ public class PatientServiceImpl implements PatientService {
     }
 
     /**
-     * Get patient By Full name
+     * Get patients By Full name
      * @param firstName first name
      * @param lastName last name
-     * @return patient
+     * @return patients
      */
     @Override
     public Patient getPatientByFullName(String firstName, String lastName) {

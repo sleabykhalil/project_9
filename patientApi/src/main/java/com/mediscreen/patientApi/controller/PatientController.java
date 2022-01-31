@@ -28,19 +28,19 @@ public class PatientController {
     /**
      * CRUD : Create Patient
      *
-     * @param patientDto patient to create
-     * @return patient after creating
+     * @param patientDto patients to create
+     * @return patients after creating
      */
-    @Operation(summary = "Add patient")
+    @Operation(summary = "Add patients")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New patient added successfully"),
+            @ApiResponse(responseCode = "200", description = "New patients added successfully"),
             @ApiResponse(responseCode = "400", description = "Patient cannot be added")
     })
     @PostMapping
     public Patient addPatient(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Add new Patient",
             required = true, content = @Content(schema = @Schema(implementation = Patient.class)))
                               @RequestBody PatientDto patientDto) {
-        log.debug("add new patient=[{}]", patientDto.toString());
+        log.debug("add new patients=[{}]", patientDto.toString());
         Patient patient = patientMapper.patientDtoToPatient(patientDto);
         return patientService.save(patient);
     }
@@ -48,11 +48,11 @@ public class PatientController {
     /**
      * CRUD : Read Patient by Id
      *
-     * @return patient by id
+     * @return patients by id
      */
-    @Operation(summary = "Get patient by id")
+    @Operation(summary = "Get patients by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New patient added successfully"),
+            @ApiResponse(responseCode = "200", description = "New patients added successfully"),
             @ApiResponse(responseCode = "400", description = "Patient cannot be added")
     })
     @GetMapping("/id")
@@ -65,11 +65,11 @@ public class PatientController {
     /**
      * CRUD : Read Patient by full name
      *
-     * @return patient by full name
+     * @return patients by full name
      */
-    @Operation(summary = "Get patient by full name")
+    @Operation(summary = "Get patients by full name")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New patient added successfully"),
+            @ApiResponse(responseCode = "200", description = "New patients added successfully"),
             @ApiResponse(responseCode = "400", description = "Patient cannot be added")
     })
     @GetMapping("/name")
@@ -85,12 +85,12 @@ public class PatientController {
 
     /*    *//**
      * CRUD : Create Patient
-     * @param patientDto patient to create
-     * @return patient after creating
+     * @param patientDto patients to create
+     * @return patients after creating
      *//*
-    @Operation(summary = "Add patient")
+    @Operation(summary = "Add patients")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200" , description = "New patient added successfully"),
+            @ApiResponse(responseCode = "200" , description = "New patients added successfully"),
             @ApiResponse (responseCode = "400" , description = "Patient cannot be added")
     })
     @PutMapping("/{id}")
@@ -98,8 +98,8 @@ public class PatientController {
             required = true, content = @Content(schema = @Schema(implementation = Patient.class)))
                               @RequestBody PatientDto patientDto,
                                  @PathVariable(name = "id") String id ) {
-        log.debug("update patient=[{}]", patientDto.toString());
-        Patient patient = patientMapper.patientDtoToPatient(patientDto);
-        return patientService.update(patient);
+        log.debug("update patients=[{}]", patientDto.toString());
+        Patient patients = patientMapper.patientDtoToPatient(patientDto);
+        return patientService.update(patients);
     }*/
 }
