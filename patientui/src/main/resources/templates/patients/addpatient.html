@@ -14,24 +14,28 @@
 <button class="btn btn-success" type="submit"> Patient UI</button>
 
 <div class="container">
-    <form class="px-4 py-3" method="POST" th:action="@{/addPatient}" th:object="${patientDto}">
+    <form class="px-4 py-3" method="POST" th:action="@{validate}" th:object="${patientDto}">
         <div class="form-group">
             <label for="firstName">first Name </label>
             <input class="form-control" id="firstName" name="firstName" placeholder="first name" th:field="*{firstName}"
                    type="text">
+            <p class="text-danger" th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}"></p>
         </div>
         <div class="form-group">
             <label for="lastName">last Name</label>
-            <input class="form-control" id="lastName" name="lastName" placeholder="Sleaby" th:field="*{lastName}"
+            <input class="form-control" id="lastName" name="lastName" placeholder="Last name" th:field="*{lastName}"
                    type="text">
+            <p class="text-danger" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"></p>
+
         </div>
         <div class="form-group">
             <label for="birthDate">Birth date</label>
-            <input class="form-control" id="birthDate" name="birthDate" placeholder="yyyy-mm-dd" th:field="*{birthDate}"
+            <input class="form-control" id="birthDate" name="birthDate" placeholder="dd/MM/yyyy" th:field="*{birthDate}"
                    type="date">
+            <p class="text-danger" th:errors="*{birthDate}" th:if="${#fields.hasErrors('birthDate')}"></p>
         </div>
         <div class="form-group">
-            <label for="gender">Email address</label>
+            <label for="gender">Gender</label>
             <input class="form-control" id="gender" name="gender" placeholder="male - female ..." th:field="*{gender}"
                    type="text">
         </div>
@@ -41,11 +45,11 @@
                    type="text">
         </div>
         <div class="form-group">
-            <label for="phoneNumber">address</label>
+            <label for="phoneNumber">Phone number</label>
             <input class="form-control" id="phoneNumber" name="phoneNumber" placeholder="phoneNumber" th:field="*{phoneNumber}"
                    type="text">
         </div>
-        <button class="btn btn-primary" type="reset">Cancel</button>
+        <a  class="btn btn-primary" th:href="@{findpatient}" type="reset">Cancel</a>
         <button class="btn btn-primary" type="submit">Add Patient</button>
     </form>
 

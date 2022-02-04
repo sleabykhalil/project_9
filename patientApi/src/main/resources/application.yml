@@ -16,7 +16,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/mediscreen_sql?serverTimezone=UTC
     username: admin
     password: change_me
-    type: org.springframework.jdbc.datasource.SingleConnectionDataSource
+#    type: org.springframework.jdbc.datasource.SingleConnectionDataSource
   jpa:
     hibernate:
       ddl-auto: none
