@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PatientServiceImpl implements PatientService {
@@ -30,8 +32,8 @@ public class PatientServiceImpl implements PatientService {
      * @return patients
      */
     @Override
-    public Patient getPatientById(String patientId) {
-        return patientDao.findById(Long.valueOf(patientId)).isPresent() ? patientDao.findById(Long.valueOf(patientId)).get() : null;
+    public Optional<Patient> getPatientById(String patientId) {
+        return patientDao.findById(Long.valueOf(patientId)).isPresent() ? patientDao.findById(Long.valueOf(patientId)) : null;
     }
 
     /**
@@ -43,5 +45,14 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient getPatientByFullName(String firstName, String lastName) {
         return patientDao.findPatientByFirstNameAndLastName(firstName, lastName);
+    }
+
+    /**
+     * Delete patient bu Id
+     * @param patientId
+     */
+    @Override
+    public void delete(String patientId) {
+         patientDao.deleteById(Long.valueOf(patientId));
     }
 }

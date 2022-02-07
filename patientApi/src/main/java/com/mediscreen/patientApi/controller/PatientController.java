@@ -29,7 +29,7 @@ public class PatientController {
      * CRUD : Create Patient
      *
      * @param patientDto patients to create
-     * @return patients after creating
+     * @return patient after creating
      */
     @Operation(summary = "Add patients")
     @ApiResponses(value = {
@@ -40,7 +40,7 @@ public class PatientController {
     public Patient addPatient(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Add new Patient",
             required = true, content = @Content(schema = @Schema(implementation = Patient.class)))
                               @RequestBody PatientDto patientDto) {
-        log.debug("add new patients=[{}]", patientDto.toString());
+        log.debug("add new patient =[{}]", patientDto.toString());
         Patient patient = patientMapper.patientDtoToPatient(patientDto);
         return patientService.save(patient);
     }
@@ -48,7 +48,7 @@ public class PatientController {
     /**
      * CRUD : Read Patient by Id
      *
-     * @return patients by id
+     * @return patient by id
      */
     @Operation(summary = "Get patients by id")
     @ApiResponses(value = {
@@ -59,13 +59,13 @@ public class PatientController {
     public Patient getPatientById(@RequestParam(name = "id")
                                   @Parameter(description = "Patient id", required = true) String patientId) {
         log.debug("Get Patient By id =[{}]", patientId);
-        return patientService.getPatientById(patientId);
+        return patientService.getPatientById(patientId).orElseThrow(RuntimeException::new);
     }
 
     /**
      * CRUD : Read Patient by full name
      *
-     * @return patients by full name
+     * @return patient by full name
      */
     @Operation(summary = "Get patients by full name")
     @ApiResponses(value = {
@@ -82,24 +82,48 @@ public class PatientController {
     }
 
 
-
-    /*    *//**
-     * CRUD : Create Patient
+    /**
+     * CRUD : Update Patient
+     *
      * @param patientDto patients to create
+     * @param patientId  id of patient to update
      * @return patients after creating
-     *//*
-    @Operation(summary = "Add patients")
+     */
+    @Operation(summary = "Add patient")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200" , description = "New patients added successfully"),
-            @ApiResponse (responseCode = "400" , description = "Patient cannot be added")
+            @ApiResponse(responseCode = "200", description = "Patients updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Patient cannot be updated")
     })
-    @PutMapping("/{id}")
-    public Patient updatePatient(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Add new Patient",
+    @PutMapping("/id")
+    public Patient updatePatient(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Update Patient",
             required = true, content = @Content(schema = @Schema(implementation = Patient.class)))
-                              @RequestBody PatientDto patientDto,
-                                 @PathVariable(name = "id") String id ) {
-        log.debug("update patients=[{}]", patientDto.toString());
-        Patient patients = patientMapper.patientDtoToPatient(patientDto);
-        return patientService.update(patients);
-    }*/
+                                 @RequestBody PatientDto patientDto,
+                                 @RequestParam(name = "id")
+                                 @Parameter(description = "Patient id", required = true) String patientId) {
+        log.debug("update patient =[{}]", patientDto.toString());
+        Patient patient = patientMapper.patientDtoToPatient(patientDto);
+        Patient currentPatient = patientService.getPatientById(patientId).orElseThrow(RuntimeException::new);
+        patient.setId(currentPatient.getId());
+        return patientService.save(patient);
+    }
+
+    /**
+     * CRUD : Delete Patient
+     *
+     * @param patientId patient id to delete
+     * @return true after deleting
+     */
+    @Operation(summary = "Delete patient")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Patients deleted successfully"),
+            @ApiResponse(responseCode = "400", description = "Patient cannot be deleted")
+    })
+    @DeleteMapping("/id")
+    public void deletePatient(@RequestParam(name = "id")
+                              @Parameter(description = "Patient id", required = true) String patientId) {
+        log.debug("Delete patients id =[{}]", patientId);
+        Patient currentPatient = patientService.getPatientById(patientId).orElseThrow(RuntimeException::new);
+
+        patientService.delete(patientId);
+    }
 }
