@@ -20,20 +20,17 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.sql.Date;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-//@ExtendWith(SpringExtension.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-//@AutoConfigureMockMvc
 class PatientControllerTest {
 
-    // @Autowired
     MockMvc mockMvc;
 
     PatientDto patientDto;
@@ -62,28 +59,68 @@ class PatientControllerTest {
 
     @Test
     void addPatient() throws Exception {
-
+        //when
+        PatientDto patientDtoToAdd = PatientDto.builder()
+                .firstName("firstNameForAddPatientTest")
+                .lastName("lastName")
+                .birthDate(Date.valueOf("2020-12-20"))
+                .build();
+        patientDtoToAdd.setFirstName("firstNameForAddPatientTest");
         mockMvc.perform(post("/patients")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(JsonUtils.asJsonString(patientDto)))
+                        .content(JsonUtils.asJsonString(patientDtoToAdd)))
                 .andExpect(status().isOk());
-
+        //then
+        assertThat(patientDao.findPatientByFirstNameAndLastName(patientDtoToAdd.getFirstName(),
+                patientDtoToAdd.getLastName())).isNotNull();
     }
 
     @Test
     void getPatientById() throws Exception {
-        Patient patient= patientDao.save(patientMapper.patientDtoToPatient(patientDto));
-        mockMvc.perform(get("/patients/id").param("id",patient.getId().toString()))
+        //given
+        Patient patient = patientDao.save(patientMapper.patientDtoToPatient(patientDto));
+        //when
+        mockMvc.perform(get("/patients/id").param("id", patient.getId().toString()))
                 .andExpect(status().isOk());
     }
 
     @Test
     void getPatientByFullName() throws Exception {
-        Patient patient= patientDao.save(patientMapper.patientDtoToPatient(patientDto));
+        //given
+        Patient patient = patientDao.save(patientMapper.patientDtoToPatient(patientDto));
+        //when
         mockMvc.perform(get("/patients/name")
-                        .param("firstName",patient.getFirstName())
-                        .param("lastName",patient.getLastName())
+                        .param("firstName", patient.getFirstName())
+                        .param("lastName", patient.getLastName())
                 )
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void updatePatient() throws Exception {
+        //given
+        Patient patient = patientDao.save(patientMapper.patientDtoToPatient(patientDto));
+        patient.setAddress("updated Address");
+        //when
+        mockMvc.perform(put("/patients/id")
+                        .param("id", String.valueOf(patient.getId()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtils.asJsonString(patient)))
+                .andExpect(status().isOk());
+        //then
+        Patient updatedPatient = patientDao.findById(patient.getId()).orElseThrow(RuntimeException::new);
+        assertThat(updatedPatient.getAddress()).isEqualTo("updated Address");
+    }
+
+    @Test
+    void deletePatient() throws Exception {
+        //given
+        Patient patient = patientDao.save(patientMapper.patientDtoToPatient(patientDto));
+        //when
+        mockMvc.perform(delete("/patients/id")
+                        .param("id", String.valueOf(patient.getId())))
+                .andExpect(status().isOk());
+        //then
+        assertThat(patientDao.findById(patient.getId())).isNotPresent();
     }
 }
