@@ -2,10 +2,7 @@ package com.mediscreen.patientui.proxies;
 
 import com.mediscreen.patientui.dto.PatientDto;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "patients-api", url = "localhost:8081")
 
@@ -19,4 +16,11 @@ public interface MicroservicePatientProxy {
     @GetMapping("/patients/name")
     PatientDto getPatientByFullName(@RequestParam(name = "firstName") String firstName,
                                     @RequestParam(name = "lastName") String lastName);
+
+    @PutMapping("/patients/id")
+    PatientDto updatePatient(@RequestBody PatientDto patientDto, @RequestParam(name = "id") String id);
+
+    @DeleteMapping("/patients/id")
+    void deletePatient(@RequestParam(name = "id") String patientId);
+
 }

@@ -33,7 +33,7 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public Optional<Patient> getPatientById(String patientId) {
-        return patientDao.findById(Long.valueOf(patientId)).isPresent() ? patientDao.findById(Long.valueOf(patientId)) : null;
+        return patientDao.findById(Long.valueOf(patientId)).isPresent() ? patientDao.findById(Long.valueOf(patientId)) : Optional.empty();
     }
 
     /**

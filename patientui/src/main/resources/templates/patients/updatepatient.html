@@ -14,7 +14,9 @@
 <button class="btn btn-success" type="submit"> Patient UI</button>
 
 <div class="container">
-    <form class="px-4 py-3" method="POST" th:action="@{/addPatient}" th:object="${patientDto}">
+    <form class="px-4 py-3" method="POST" th:action="@{/patients/updatepatient(id=${patientDto.id})}" th:object="${patientDto}">
+<!--        <input th:field="*{id}" id="id" type="hidden">-->
+
         <div class="form-group">
             <label for="firstName">first Name </label>
             <input class="form-control" id="firstName" name="firstName" placeholder="first name" th:field="*{firstName}"
@@ -41,12 +43,12 @@
                    type="text">
         </div>
         <div class="form-group">
-            <label for="phoneNumber">address</label>
+            <label for="phoneNumber">Phone number</label>
             <input class="form-control" id="phoneNumber" name="phoneNumber" placeholder="phoneNumber" th:field="*{phoneNumber}"
                    type="text">
         </div>
         <button class="btn btn-primary" type="reset">Cancel</button>
-        <button class="btn btn-primary" type="submit">Add Patient</button>
+        <button class="btn btn-primary" type="submit">Update Patient</button>
     </form>
 
 

@@ -18,6 +18,9 @@ spring:
     password: change_me
 #    type: org.springframework.jdbc.datasource.SingleConnectionDataSource
   jpa:
+    properties:
+      hibernate:
+        dialect:org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: none
       show-sql: true

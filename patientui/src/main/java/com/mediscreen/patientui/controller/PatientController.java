@@ -67,4 +67,29 @@ public class PatientController {
         }
     }
 
+    @GetMapping("/patients/updatepatient")
+    public String getUpdatePatientForm(@RequestParam(name = "id") String id, Model model) {
+        PatientDto patientDto = patientProxy.getPatientById(id);
+        model.addAttribute("patientDto", patientDto);
+        return "patients/updatepatient";
+    }
+
+    @PostMapping("/patients/updatepatient")
+    public String updatePatient(@RequestParam(name = "id") String id,
+                                @Valid PatientDto patientDto,
+                                BindingResult result,
+                                Model model) {
+        if (!result.hasErrors()) {
+            PatientDto newPatientDto = patientProxy.updatePatient(patientDto, id);
+            return "redirect:findpatient?patientId=".concat(newPatientDto.getId().toString());
+        } else {
+            return "patients/updatepatient?patientId=".concat(id);
+        }
+    }
+
+    @GetMapping("/patients/deletepatient")
+    public String deletePatient(@RequestParam("id") String id, Model model) {
+        patientProxy.deletePatient(id);
+        return "redirect:findpatient";
+    }
 }
