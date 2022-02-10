@@ -39,6 +39,7 @@
                 <th>Patient Id</th>
                 <th>First name</th>
                 <th>Last name</th>
+                <th>Birth day</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -47,9 +48,10 @@
                 <td th:text="${patientDto.id}">id</td>
                 <td th:text="${patientDto.firstName}">First name</td>
                 <td th:text="${patientDto.lastName}">Last name</td>
+                <td th:text="${patientDto.birthDate}">Last name</td>
 
-                <td><a role="button" th:href="@{/patients/updatepatient/{id}(id=${patientDto.id})}">Edit</a> |
-                    <a role="button" th:href="@{/patients/deletePatient/{id}(id=${patientDto.id})}">Delete</a></td>
+                <td><a role="button" th:href="@{/patients/updatepatient(id=${patientDto.id})}">Edit</a> |
+                    <a role="button" th:href="@{/patients/deletepatient(id=${patientDto.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>

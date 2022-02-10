@@ -86,7 +86,7 @@ public class PatientController {
      * CRUD : Update Patient
      *
      * @param patientDto patients to create
-     * @param patientId  id of patient to update
+     * @param id         id of patient to update
      * @return patients after creating
      */
     @Operation(summary = "Add patient")
@@ -99,10 +99,10 @@ public class PatientController {
             required = true, content = @Content(schema = @Schema(implementation = Patient.class)))
                                  @RequestBody PatientDto patientDto,
                                  @RequestParam(name = "id")
-                                 @Parameter(description = "Patient id", required = true) String patientId) {
+                                 @Parameter(description = "Patient id", required = true) String id) {
         log.debug("update patient =[{}]", patientDto.toString());
         Patient patient = patientMapper.patientDtoToPatient(patientDto);
-        Patient currentPatient = patientService.getPatientById(patientId).orElseThrow(RuntimeException::new);
+        Patient currentPatient = patientService.getPatientById(id).orElseThrow(RuntimeException::new);
         patient.setId(currentPatient.getId());
         return patientService.save(patient);
     }
@@ -110,7 +110,7 @@ public class PatientController {
     /**
      * CRUD : Delete Patient
      *
-     * @param patientId patient id to delete
+     * @param id patient id to delete
      * @return true after deleting
      */
     @Operation(summary = "Delete patient")
@@ -120,10 +120,10 @@ public class PatientController {
     })
     @DeleteMapping("/id")
     public void deletePatient(@RequestParam(name = "id")
-                              @Parameter(description = "Patient id", required = true) String patientId) {
-        log.debug("Delete patients id =[{}]", patientId);
-        Patient currentPatient = patientService.getPatientById(patientId).orElseThrow(RuntimeException::new);
+                              @Parameter(description = "Patient id", required = true) String id) {
+        log.debug("Delete patients id =[{}]", id);
+        Patient currentPatient = patientService.getPatientById(id).orElseThrow(RuntimeException::new);
 
-        patientService.delete(patientId);
+        patientService.delete(id);
     }
 }
