@@ -41,7 +41,8 @@ public class MedicalHistoryController {
 
     /**
      * Get all medical history
-     * @return
+     *
+     * @return All medical history
      */
     @GetMapping("/all")
     public List<MedicalHistory> findAllMedicalHistory() {
@@ -50,6 +51,7 @@ public class MedicalHistoryController {
 
     /**
      * Read patient medical history
+     *
      * @param id patient id to get medical history
      * @return medical history by patient id
      */
@@ -65,7 +67,8 @@ public class MedicalHistoryController {
 
     /**
      * medical history to be updated
-     * @param id patient id to update his medical history
+     *
+     * @param id             patient id to update his medical history
      * @param medicalHistory new medical history
      * @return updated medical history
      */
@@ -83,7 +86,7 @@ public class MedicalHistoryController {
      * @param id patient medical record id
      */
     @DeleteMapping
-    public void deleteMedicalHistory(@RequestParam  @Parameter(description = "medical record id", required = true) String id) {
+    public void deleteMedicalHistory(@RequestParam @Parameter(description = "medical record id", required = true) String id) {
         medicalHistoryService.deleteMedicalHistory(id);
     }
 }
