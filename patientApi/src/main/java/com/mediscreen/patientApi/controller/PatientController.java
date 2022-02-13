@@ -28,12 +28,12 @@ public class PatientController {
     /**
      * CRUD : Create Patient
      *
-     * @param patientDto patients to create
+     * @param patientDto patient to create
      * @return patient after creating
      */
-    @Operation(summary = "Add patients")
+    @Operation(summary = "Add patient")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New patients added successfully"),
+            @ApiResponse(responseCode = "200", description = "New patient added successfully"),
             @ApiResponse(responseCode = "400", description = "Patient cannot be added")
     })
     @PostMapping
@@ -50,10 +50,10 @@ public class PatientController {
      *
      * @return patient by id
      */
-    @Operation(summary = "Get patients by id")
+    @Operation(summary = "Get patient by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New patients added successfully"),
-            @ApiResponse(responseCode = "400", description = "Patient cannot be added")
+            @ApiResponse(responseCode = "200", description = "New patient found successfully"),
+            @ApiResponse(responseCode = "400", description = "Patient cannot be found")
     })
     @GetMapping("/id")
     public Patient getPatientById(@RequestParam(name = "id")
@@ -69,8 +69,8 @@ public class PatientController {
      */
     @Operation(summary = "Get patients by full name")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New patients added successfully"),
-            @ApiResponse(responseCode = "400", description = "Patient cannot be added")
+            @ApiResponse(responseCode = "200", description = "Patient found successfully"),
+            @ApiResponse(responseCode = "400", description = "Patient cannot be found")
     })
     @GetMapping("/name")
     public Patient getPatientByFullName(@RequestParam(name = "firstName")
