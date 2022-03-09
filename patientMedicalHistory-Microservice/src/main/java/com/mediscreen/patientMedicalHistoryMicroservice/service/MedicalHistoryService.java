@@ -16,4 +16,6 @@ public interface MedicalHistoryService {
     MedicalHistory updateMedicalHistory(String id, MedicalHistory medicalHistory);
 
     void deleteMedicalHistory(String id);
+
+    String aggregateMedicalHistory(String id, String word);
 }

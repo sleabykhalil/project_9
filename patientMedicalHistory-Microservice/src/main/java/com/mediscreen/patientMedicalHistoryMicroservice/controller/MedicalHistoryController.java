@@ -89,4 +89,10 @@ public class MedicalHistoryController {
     public void deleteMedicalHistory(@RequestParam @Parameter(description = "medical record id", required = true) String id) {
         medicalHistoryService.deleteMedicalHistory(id);
     }
+
+    @GetMapping("/aggregateMedicalHistory")
+    public String aggregateMedicalHistory(@RequestParam String id , @RequestParam String word){
+        return medicalHistoryService.aggregateMedicalHistory(id,word);
+    }
+
 }
