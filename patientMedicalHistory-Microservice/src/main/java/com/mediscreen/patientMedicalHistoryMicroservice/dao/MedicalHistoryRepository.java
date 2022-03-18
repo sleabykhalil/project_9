@@ -9,16 +9,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MedicalHistoryRepository extends MongoRepository<MedicalHistory, String>{
+public interface MedicalHistoryRepository extends MongoRepository<MedicalHistory, String> {
 
-/*    @Aggregation (pipeline = {"{$match : {patientId: :#{#id} } }," ,
-            "{$project  : { word :{ $split :[ $notes, \" \" ]} } }," ,
-            "{ $unwind : $word }," ,
-            "{$match :{$expr : {$in : [ $word ,:#{#keywords} ] } } },",
-            "{$group : { _id : $word } }"})
-    List<String> findByIdAndKeyWords(@Param("id") String id, @Param("keywords") String[] keyWords);*/
-
-    @Aggregation (pipeline = {"{$match : {patientId: :#{#id} } }," ,
+    /**
+     * return index of word if exist
+     * @param id
+     * @return
+     */
+    @Aggregation(pipeline = {"{$match : {patientId: :#{#id} } },",
             "{$project:{          " +
                     "Hémoglobine_A1C: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Hémoglobine A1C' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes,' Hémoglobine A1C' ]}}},\n" +
                     "Microalbumine: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Microalbumine'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Microalbumine' ]}}},\n" +
@@ -35,6 +33,4 @@ public interface MedicalHistoryRepository extends MongoRepository<MedicalHistory
                     "}",
             "{$unset : [\"_id\"]}"})
     AggregationResults<Document> findByIdAndKeyWords(@Param("id") String id);
-
-
 }

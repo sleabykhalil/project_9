@@ -1,10 +1,10 @@
 package com.mediscreen.patientMedicalHistoryMicroservice.service;
 
 import com.mediscreen.patientMedicalHistoryMicroservice.model.MedicalHistory;
-import org.bson.Document;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public interface MedicalHistoryService {
@@ -18,5 +18,5 @@ public interface MedicalHistoryService {
 
     void deleteMedicalHistory(String id);
 
-    List<Document> aggregateMedicalHistory(String id);
+    Set<String> aggregateMedicalHistory(String id);
 }

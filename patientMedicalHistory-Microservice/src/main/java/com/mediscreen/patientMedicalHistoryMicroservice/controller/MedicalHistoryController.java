@@ -9,11 +9,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -92,7 +92,7 @@ public class MedicalHistoryController {
     }
 
     @GetMapping("/aggregateMedicalHistory")
-    public List<Document> aggregateMedicalHistory(@RequestParam String id) {
+    public Set<String> aggregateMedicalHistory(@RequestParam String id) {
         return medicalHistoryService.aggregateMedicalHistory(id);
     }
 
