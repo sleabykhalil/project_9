@@ -5,10 +5,15 @@ import com.mediscreen.patientMedicalHistoryMicroservice.model.MedicalHistory;
 import com.mediscreen.patientMedicalHistoryMicroservice.service.MedicalHistoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -46,4 +51,24 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
         }
     }
 
+    /**
+     * Get set of keyword founded in Notes
+     * @param id
+     * @return
+     */
+    @Override
+    public Set<String> aggregateMedicalHistory(String id) {
+
+        AggregationResults<Document> keyWordFound = medicalHistoryRepository.findByIdAndKeyWords(id);
+
+        Set<String> keyWordsFoundSet = new HashSet<>();
+        keyWordFound.getMappedResults().forEach(document -> {
+            for (Map.Entry entry :
+                    document.entrySet()) {
+                keyWordsFoundSet.add((String) entry.getKey());
+            }
+        });
+
+        return keyWordsFoundSet;
+    }
 }

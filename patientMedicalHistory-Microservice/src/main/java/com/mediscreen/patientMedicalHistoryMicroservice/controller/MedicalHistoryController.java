@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -89,4 +90,10 @@ public class MedicalHistoryController {
     public void deleteMedicalHistory(@RequestParam @Parameter(description = "medical record id", required = true) String id) {
         medicalHistoryService.deleteMedicalHistory(id);
     }
+
+    @GetMapping("/aggregateMedicalHistory")
+    public Set<String> aggregateMedicalHistory(@RequestParam String id) {
+        return medicalHistoryService.aggregateMedicalHistory(id);
+    }
+
 }

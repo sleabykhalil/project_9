@@ -4,6 +4,7 @@ import com.mediscreen.patientMedicalHistoryMicroservice.model.MedicalHistory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public interface MedicalHistoryService {
@@ -16,4 +17,6 @@ public interface MedicalHistoryService {
     MedicalHistory updateMedicalHistory(String id, MedicalHistory medicalHistory);
 
     void deleteMedicalHistory(String id);
+
+    Set<String> aggregateMedicalHistory(String id);
 }
