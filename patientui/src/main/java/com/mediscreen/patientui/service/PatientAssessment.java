@@ -14,42 +14,12 @@ public class PatientAssessment {
 
     public String getAssessment(PatientDto patientDto, Set<String> patientSetOfKeyWord) {
 
-
         if (patientDto.getGender().equals("M")) {
             return getManRiskLevel(patientSetOfKeyWord.size(), patientDto);
         } else {
             return getWomanRiskLevel(patientSetOfKeyWord.size(), patientDto);
         }
 
-/*
-        switch (patientSetOfKeyWord.size()) {
-            case 0:
-                return getRiskLevelMessage(patientDto, 1);
-            case 1:
-                return getBetweenRiskLevelMessage(patientDto, 1);
-            case 2:
-                if (getAge(patientDto.getBirthDate()) > Constant.BASS_AGE) {
-                    return getRiskLevelMessage(patientDto, 2);
-                } else {
-                    return getBetweenRiskLevelMessage(patientDto, 1);
-                }
-            case 3:
-                if ((getAge(patientDto.getBirthDate()) < Constant.BASS_AGE) && patientDto.getGender().equals("M")) {
-                    return getRiskLevelMessage(patientDto, 3);
-                } else {
-                    return getBetweenRiskLevelMessage(patientDto, 2);
-                }
-            case 4:
-                if (getAge(patientDto.getBirthDate()) < Constant.BASS_AGE) {
-                    return getRiskLevelMessage(patientDto, 3);
-                } else {
-                    return getBetweenRiskLevelMessage(patientDto, 2);
-                }
-            case 5:
-                if ((getAge(patientDto.getBirthDate()) < Constant.BASS_AGE) && patientDto.getGender().equals("M")) {
-                    return getRiskLevelMessage(patientDto, 4);
-                } else {
-                }*/
     }
 
     private String getManRiskLevel(int keyWordCounter, PatientDto patientDto) {
@@ -83,6 +53,7 @@ public class PatientAssessment {
             case 4:
             case 3:
             case 2:
+                return getRiskLevelMessage(patientDto, 2);
             case 1:
             case 0:
                 return getRiskLevelMessage(patientDto, 1);
