@@ -14,62 +14,151 @@ public class PatientAssessment {
 
     public String getAssessment(PatientDto patientDto, Set<String> patientSetOfKeyWord) {
 
-        switch (patientSetOfKeyWord.size()) {
-            case Constant.NO_RISK_KEYWORD_NUMBER:
-                return getMessage(patientDto, 0);
-            case Constant.LIMIT_RISK_KEYWORD_NUMBER:
-                if (getAge(patientDto.getBirthDate()) > Constant.BASS_AGE) {
-                    return getMessage(patientDto, 1);
-                }
-            case Constant.IN_DANGER_FOR_MAN_LESS_THAN_BASS_AGE_KEYWORD_NUMBER:
-                if ((getAge(patientDto.getBirthDate()) > Constant.BASS_AGE) && patientDto.getGender().equals("M")) {
-                    return getMessage(patientDto, 2);
-                }
-            case Constant.IN_DANGER_FOR_WOMAN_LESS_THAN_BASS_AGE_KEYWORD_NUMBER:
-                if ((getAge(patientDto.getBirthDate()) > Constant.BASS_AGE) && patientDto.getGender().equals("F")) {
-                    return getMessage(patientDto, 2);
-                }
 
+        if (patientDto.getGender().equals("M")) {
+            return getManRiskLevel(patientSetOfKeyWord.size(), patientDto);
+        } else {
+            return getWomanRiskLevel(patientSetOfKeyWord.size(), patientDto);
         }
-        return null;
+
+/*
+        switch (patientSetOfKeyWord.size()) {
+            case 0:
+                return getRiskLevelMessage(patientDto, 1);
+            case 1:
+                return getBetweenRiskLevelMessage(patientDto, 1);
+            case 2:
+                if (getAge(patientDto.getBirthDate()) > Constant.BASS_AGE) {
+                    return getRiskLevelMessage(patientDto, 2);
+                } else {
+                    return getBetweenRiskLevelMessage(patientDto, 1);
+                }
+            case 3:
+                if ((getAge(patientDto.getBirthDate()) < Constant.BASS_AGE) && patientDto.getGender().equals("M")) {
+                    return getRiskLevelMessage(patientDto, 3);
+                } else {
+                    return getBetweenRiskLevelMessage(patientDto, 2);
+                }
+            case 4:
+                if (getAge(patientDto.getBirthDate()) < Constant.BASS_AGE) {
+                    return getRiskLevelMessage(patientDto, 3);
+                } else {
+                    return getBetweenRiskLevelMessage(patientDto, 2);
+                }
+            case 5:
+                if ((getAge(patientDto.getBirthDate()) < Constant.BASS_AGE) && patientDto.getGender().equals("M")) {
+                    return getRiskLevelMessage(patientDto, 4);
+                } else {
+                }*/
     }
 
-    private String getMessage(PatientDto patientDto, int riskLevel) {
-        switch (riskLevel) {
-            case 1: {                //Patient: Test TestNone (age 52) diabetes assessment is: None
-                return "Patient: " +
-                        patientDto.getFirstName() + " " +
-                        patientDto.getLastName() + " " +
-                        "(age" + getAge(patientDto.getBirthDate()) + ") " +
-                        "diabetes assessment is: None";
-            }
-            case 2: {                //Patient: Test TestBorderline (age 73) diabetes assessment is: Borderline
-                return "Patient: " +
-                        patientDto.getFirstName() + " " +
-                        patientDto.getLastName() + " " +
-                        "(age" + getAge(patientDto.getBirthDate()) + ") " +
-                        "diabetes assessment is: Borderline";
-            }
-            case 3: {                //Patient: Test TestInDanger (age 14) diabetes assessment is: In danger
-                return "Patient: " +
-                        patientDto.getFirstName() + " " +
-                        patientDto.getLastName() + " " +
-                        "(age" + getAge(patientDto.getBirthDate()) + ") " +
-                        "diabetes assessment is: In danger";
-            }
-            case 4: {                //Patient: Test TestEarlyOnset (age 16) diabetes assessment is: Early onset
-                return "Patient: " +
-                        patientDto.getFirstName() + " " +
-                        patientDto.getLastName() + " " +
-                        "(age" + getAge(patientDto.getBirthDate()) + ") " +
-                        "diabetes assessment is: Early onset";
-            }
+    private String getManRiskLevel(int keyWordCounter, PatientDto patientDto) {
+        if (getAge(patientDto.getBirthDate()) > Constant.BASS_AGE) {
+            return getManMoreThanBassAgeRiskLevel(keyWordCounter, patientDto);
+        } else {
+            return getManLessThenBassAgeRiskLevel(keyWordCounter, patientDto);
         }
-        return "Patient: " +
+    }
+
+    private String getManLessThenBassAgeRiskLevel(int keyWordCounter, PatientDto patientDto) {
+        switch (keyWordCounter) {
+            case 4:
+            case 3:
+                return getRiskLevelMessage(patientDto, 3);
+            case 2:
+            case 1:
+            case 0:
+                return getRiskLevelMessage(patientDto, 1);
+            default:
+                return getRiskLevelMessage(patientDto, 4);
+        }
+    }
+
+    private String getManMoreThanBassAgeRiskLevel(int keyWordCounter, PatientDto patientDto) {
+        switch (keyWordCounter) {
+            case 7:
+            case 6:
+                return getRiskLevelMessage(patientDto, 3);
+            case 5:
+            case 4:
+            case 3:
+            case 2:
+            case 1:
+            case 0:
+                return getRiskLevelMessage(patientDto, 1);
+            default:
+                return getRiskLevelMessage(patientDto, 4);
+        }
+    }
+
+    private String getWomanRiskLevel(int keyWordCounter, PatientDto patientDto) {
+        if (getAge(patientDto.getBirthDate()) > Constant.BASS_AGE) {
+            return getWomanMoreThanBassAgeRiskLevel(keyWordCounter, patientDto);
+        } else {
+            return getWomanLessThanBassAgeRiskLevel(keyWordCounter, patientDto);
+        }
+    }
+
+    private String getWomanLessThanBassAgeRiskLevel(int keyWordCounter, PatientDto patientDto) {
+        switch (keyWordCounter) {
+            case 6:
+            case 5:
+            case 4:
+                return getRiskLevelMessage(patientDto, 3);
+            case 3:
+            case 2:
+            case 1:
+            case 0:
+                return getRiskLevelMessage(patientDto, 1);
+            default:
+                return getRiskLevelMessage(patientDto, 4);
+        }
+    }
+
+    private String getWomanMoreThanBassAgeRiskLevel(int keyWordCounter, PatientDto patientDto) {
+        switch (keyWordCounter) {
+            case 7:
+            case 6:
+                return getRiskLevelMessage(patientDto, 3);
+            case 5:
+            case 4:
+            case 3:
+            case 2:
+                return getRiskLevelMessage(patientDto, 2);
+            case 1:
+            case 0:
+                return getRiskLevelMessage(patientDto, 1);
+            default:
+                return getRiskLevelMessage(patientDto, 4);
+        }
+    }
+
+    private String getRiskLevelMessage(PatientDto patientDto, int riskLevel) {
+        String bassMessage = "Patient: " +
                 patientDto.getFirstName() + " " +
                 patientDto.getLastName() + " " +
-                "(age" + getAge(patientDto.getBirthDate()) + ") " +
-                "diabetes assessment is: Unknown";
+                "(age" + getAge(patientDto.getBirthDate()) + ") ";
+        String LEVEL_1 = "diabetes assessment is: None";
+        String LEVEL_2 = "diabetes assessment is: Borderline";
+        String LEVEL_3 = "diabetes assessment is: In danger";
+        String LEVEL_4 = "diabetes assessment is: Early onset";
+        String LEVEL_UNKNOWN = "diabetes assessment is: Unknown";
+
+        switch (riskLevel) {
+            case 1: {                //Patient: Test TestNone (age 52) diabetes assessment is: None
+                return bassMessage + LEVEL_1;
+            }
+            case 2: {                //Patient: Test TestBorderline (age 73) diabetes assessment is: Borderline
+                return bassMessage + LEVEL_2;
+            }
+            case 3: {                //Patient: Test TestInDanger (age 14) diabetes assessment is: In danger
+                return bassMessage + LEVEL_3;
+            }
+            case 4: {                //Patient: Test TestEarlyOnset (age 16) diabetes assessment is: Early onset
+                return bassMessage + LEVEL_4;
+            }
+        }
+        return bassMessage + LEVEL_UNKNOWN;
     }
 
     private int getAge(Date birthDate) {
