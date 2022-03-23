@@ -32,5 +32,23 @@ public interface MedicalHistoryRepository extends MongoRepository<MedicalHistory
                     "}\n" +
                     "}",
             "{$unset : [\"_id\"]}"})
-    AggregationResults<Document> findByIdAndKeyWords(@Param("id") String id);
+    AggregationResults<Document> getKeyWordsFundedById(@Param("id") String id);
+
+    @Aggregation(pipeline = {"{$match : {patientId: :#{#id} } },",
+            "{$project:{          " +
+                    "Hémoglobine_A1C: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Hemoglobin A1C' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes,' Hémoglobine A1C' ]}}},\n" +
+                    "Microalbumine: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Microalbumin'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Microalbumine' ]}}},\n" +
+                    "Taille: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Height'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Taille' ]}}},\n" +
+                    "Poids: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Weight'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Poids' ]}}},\n" +
+                    "Fumeur: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Smoker' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Fumeur' ]}}},\n" +
+                    "Anormal: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Abnormal' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Anormal' ]}}},\n" +
+                    "Cholestérol: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Cholesterol' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Cholestérol' ]}}},\n" +
+                    "Vertige: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Dizziness' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Vertige' ]}}},\n" +
+                    "Rechute: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Relapse' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Rechute' ]}}},\n" +
+                    "Réaction: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes,'Reaction' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Réaction' ]}}},\n" +
+                    "Anticorps: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Antibodies' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Anticorps' ]}}}\n" +
+                    "}\n" +
+                    "}",
+            "{$unset : [\"_id\"]}"})
+    AggregationResults<Document> getKeyWordsFundedByIdInEnglish(@Param("id") String id);
 }

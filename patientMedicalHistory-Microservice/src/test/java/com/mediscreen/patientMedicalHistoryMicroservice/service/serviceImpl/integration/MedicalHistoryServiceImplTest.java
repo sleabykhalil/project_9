@@ -55,7 +55,7 @@ class MedicalHistoryServiceImplTest {
         mongoTemplate.save(objectToSave, "medical_history");
 
         // when
-        AggregationResults<Document> result = medicalHistoryRepository.findByIdAndKeyWords("2");
+        AggregationResults<Document> result = medicalHistoryRepository.getKeyWordsFundedById("2");
 
         // then
         assertThat(result.getMappedResults().size()).isEqualTo(1);

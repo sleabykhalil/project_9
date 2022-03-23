@@ -9,6 +9,6 @@ import java.util.Set;
 @FeignClient(name = "medicalhistory", url = "localhost:8082")
 public interface PatientMedicalHistoryProxy {
 
-    @GetMapping("/aggregateMedicalHistory")
+    @GetMapping("/patient_medical_history/aggregateMedicalHistory")
     Set<String> aggregateMedicalHistory(@RequestParam String id);
 }
