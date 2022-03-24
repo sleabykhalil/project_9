@@ -136,7 +136,7 @@ public class PatientAssessment {
         DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         int d1 = Integer.parseInt(formatter.format(birthDate));
         int d2 = Integer.parseInt(formatter.format(new Date()));
-        int age = (d2 - d1) / 10000;
-        return age;
+        int age = (d1 - d2) / 10000;
+        return Math.abs(age);
     }
 }
