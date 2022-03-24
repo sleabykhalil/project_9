@@ -28,6 +28,7 @@ public class PatientServiceImpl implements PatientService {
 
     /**
      * Get Patient By Id
+     *
      * @param patientId Patient Id
      * @return patients
      */
@@ -38,8 +39,9 @@ public class PatientServiceImpl implements PatientService {
 
     /**
      * Get patients By Full name
+     *
      * @param firstName first name
-     * @param lastName last name
+     * @param lastName  last name
      * @return patients
      */
     @Override
@@ -48,11 +50,23 @@ public class PatientServiceImpl implements PatientService {
     }
 
     /**
+     * Get patients By Last name
+     *
+     * @param lastName last name
+     * @return patients
+     */
+    @Override
+    public Patient getPatientByLastName(String lastName) {
+        return patientDao.findPatientByLastName(lastName);
+    }
+
+    /**
      * Delete patient bu Id
+     *
      * @param patientId
      */
     @Override
     public void delete(String patientId) {
-         patientDao.deleteById(Long.valueOf(patientId));
+        patientDao.deleteById(Long.valueOf(patientId));
     }
 }

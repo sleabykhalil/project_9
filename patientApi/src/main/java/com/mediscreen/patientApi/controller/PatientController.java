@@ -81,6 +81,22 @@ public class PatientController {
         return patientService.getPatientByFullName(firstName, lastName);
     }
 
+    /**
+     * CRUD : Read Patient by last name
+     *
+     * @return patient by last name
+     */
+    @Operation(summary = "Get patients by last name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Patient found successfully"),
+            @ApiResponse(responseCode = "400", description = "Patient cannot be found")
+    })
+    @GetMapping("/lastname")
+    public Patient getPatientByLastName(@RequestParam(name = "lastName")
+                                        @Parameter(description = "lastName", required = true) String lastName) {
+        log.debug("Get Patient By full name =[{}]", lastName);
+        return patientService.getPatientByLastName(lastName);
+    }
 
     /**
      * CRUD : Update Patient

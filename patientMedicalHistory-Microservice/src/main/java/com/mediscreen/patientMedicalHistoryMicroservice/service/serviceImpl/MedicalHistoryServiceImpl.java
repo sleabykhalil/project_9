@@ -58,17 +58,22 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
      */
     @Override
     public Set<String> aggregateMedicalHistory(String id) {
-
-        AggregationResults<Document> keyWordFound = medicalHistoryRepository.findByIdAndKeyWords(id);
-
         Set<String> keyWordsFoundSet = new HashSet<>();
+        AggregationResults<Document> keyWordFound = medicalHistoryRepository.getKeyWordsFundedById(id);
+        mapToKeyWordSet(keyWordFound, keyWordsFoundSet);
+
+        AggregationResults<Document> keyWordFoundInEnglish = medicalHistoryRepository.getKeyWordsFundedByIdInEnglish(id);
+        mapToKeyWordSet(keyWordFoundInEnglish, keyWordsFoundSet);
+
+        return keyWordsFoundSet;
+    }
+
+    private void mapToKeyWordSet(AggregationResults<Document> keyWordFound, Set<String> keyWordsFoundSet) {
         keyWordFound.getMappedResults().forEach(document -> {
             for (Map.Entry entry :
                     document.entrySet()) {
                 keyWordsFoundSet.add((String) entry.getKey());
             }
         });
-
-        return keyWordsFoundSet;
     }
 }
