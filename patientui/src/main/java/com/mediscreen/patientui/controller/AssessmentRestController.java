@@ -6,7 +6,7 @@ import com.mediscreen.patientui.proxies.PatientMedicalHistoryProxy;
 import com.mediscreen.patientui.service.PatientAssessment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,14 +20,19 @@ public class AssessmentRestController {
     private final PatientMedicalHistoryProxy medicalHistoryProxy;
     private final PatientAssessment patientAssessment;
 
-    @GetMapping("/assess/")
+    @PostMapping(value = "/assess/id", params = {"id"})
     public String getAssessmentById(@RequestParam("id") String patientId) {
-        /*
-         * find patient age
-         * aggregate  patient notes
-         * get assessment*/
+
         PatientDto patientDto = patientProxy.getPatientById(patientId);
-        Set<String> patientSetOfKeyWord = medicalHistoryProxy.aggregateMedicalHistory(patientId);
-        return patientAssessment.getAssessment(patientDto,patientSetOfKeyWord);
+        Set<String> patientSetOfKeyWord = medicalHistoryProxy.aggregateMedicalHistory(patientDto.getId().toString());
+        return patientAssessment.getAssessment(patientDto, patientSetOfKeyWord);
+    }
+
+    @PostMapping(value = "/assess/familyName", params = {"familyName"})
+    public String getAssessmentByName(@RequestParam("familyName") String lastName) {
+
+        PatientDto patientDto = patientProxy.getPatientByLastName(lastName);
+        Set<String> patientSetOfKeyWord = medicalHistoryProxy.aggregateMedicalHistory(patientDto.getId().toString());
+        return patientAssessment.getAssessment(patientDto, patientSetOfKeyWord);
     }
 }

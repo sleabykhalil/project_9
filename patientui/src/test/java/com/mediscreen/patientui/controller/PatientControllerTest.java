@@ -109,7 +109,7 @@ class PatientControllerTest {
         //when
         String result = patientController.validatePatient(patientDto, mockBindingResult, mockModel);
         //then
-        assertThat(result).isEqualTo("redirect:patients/findpatient?patientId=1");
+        assertThat(result).isEqualTo("redirect:findpatient?patientId=1");
 
     }
 }

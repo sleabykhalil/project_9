@@ -1,6 +1,7 @@
 package com.mediscreen.patientui.proxies;
 
 import com.mediscreen.patientui.dto.PatientDto;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,9 @@ public interface MicroservicePatientProxy {
     @GetMapping("/patients/name")
     PatientDto getPatientByFullName(@RequestParam(name = "firstName") String firstName,
                                     @RequestParam(name = "lastName") String lastName);
-
+    @GetMapping("/patients/lastname")
+    PatientDto getPatientByLastName(@RequestParam(name = "lastName")
+                                        @Parameter(description = "lastName", required = true) String lastName);
     @PutMapping("/patients/id")
     PatientDto updatePatient(@RequestBody PatientDto patientDto, @RequestParam(name = "id") String id);
 

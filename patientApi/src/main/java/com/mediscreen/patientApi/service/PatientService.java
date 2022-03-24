@@ -13,5 +13,7 @@ public interface PatientService {
 
     Patient getPatientByFullName(String firstName, String lastName);
 
+    Patient getPatientByLastName(String lastName);
+
     void delete(String patientId);
 }
