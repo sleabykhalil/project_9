@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "patients-api", url = "localhost:8081")
+@FeignClient(name = "patients-api", url = "http://microservice.patient:8081")
 
 public interface MicroservicePatientProxy {
     @PostMapping(value = "/patients")
