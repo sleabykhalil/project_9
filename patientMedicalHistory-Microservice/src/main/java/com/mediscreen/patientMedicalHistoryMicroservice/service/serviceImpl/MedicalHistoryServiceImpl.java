@@ -68,6 +68,11 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
         return keyWordsFoundSet;
     }
 
+    @Override
+    public List<MedicalHistory> findByPatientId(String patientId) {
+        return medicalHistoryRepository.findByPatientId(patientId);
+    }
+
     private void mapToKeyWordSet(AggregationResults<Document> keyWordFound, Set<String> keyWordsFoundSet) {
         keyWordFound.getMappedResults().forEach(document -> {
             for (Map.Entry entry :
