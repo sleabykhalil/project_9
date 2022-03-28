@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -45,7 +45,7 @@ class PatientControllerTest {
         patientDto = PatientDto.builder()
                 .firstName("firstName")
                 .lastName("lastName")
-                .birthDate(Date.valueOf("2020-12-20"))
+                .birthDate(LocalDate.parse("2020-12-20"))
                 .address("address")
                 .gender("male")
                 .phoneNumber("01 23 45 67 89").build();
@@ -63,7 +63,7 @@ class PatientControllerTest {
         PatientDto patientDtoToAdd = PatientDto.builder()
                 .firstName("firstNameForAddPatientTest")
                 .lastName("lastName")
-                .birthDate(Date.valueOf("2020-12-20"))
+                .birthDate(LocalDate.parse("2020-12-20"))
                 .build();
         patientDtoToAdd.setFirstName("firstNameForAddPatientTest");
         mockMvc.perform(post("/patients")

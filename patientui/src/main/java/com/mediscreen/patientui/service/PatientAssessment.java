@@ -8,9 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Set;
 
 @Service
@@ -120,7 +119,7 @@ public class PatientAssessment {
         String bassMessage = "Patient: " +
                 patientDto.getFirstName() + " " +
                 patientDto.getLastName() + " " +
-                "(age" + getAge(patientDto.getBirthDate()) + ") ";
+                "(age " + getAge(patientDto.getBirthDate()) + ") ";
         String LEVEL_1 = "diabetes assessment is: None";
         String LEVEL_2 = "diabetes assessment is: Borderline";
         String LEVEL_3 = "diabetes assessment is: In danger";
@@ -144,11 +143,12 @@ public class PatientAssessment {
         return bassMessage + LEVEL_UNKNOWN;
     }
 
-    private int getAge(Date birthDate) {
-        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        int d1 = Integer.parseInt(formatter.format(birthDate));
-        int d2 = Integer.parseInt(formatter.format(new Date()));
-        int age = (d1 - d2) / 10000;
-        return Math.abs(age);
+    private int getAge(LocalDate birthDate) {
+//        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+//        int d1 = Integer.parseInt(formatter.format(birthDate));
+//        int d2 = Integer.parseInt(formatter.format(new Date()));
+//        int age = (d1 - d2) / 10000;
+        return Math.abs(Period.between(birthDate, LocalDate.now()).getYears());
+//        return Math.abs(age);
     }
 }

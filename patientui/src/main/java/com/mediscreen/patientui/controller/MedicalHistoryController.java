@@ -34,7 +34,7 @@ public class MedicalHistoryController {
     }
 
     @GetMapping("/medicalhistory/addmedicalhistory")
-    public String addNewPatient(Model model, @RequestParam(value = "patientId", required = true) String patientId) {
+    public String addNewPatient(Model model, @RequestParam(value = "patientId", required = false) String patientId) {
         MedicalHistoryDto medicalHistoryDto = MedicalHistoryDto.builder()
                 .patientId(patientId).build();
         model.addAttribute("medicalHistoryDto", medicalHistoryDto);

@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -26,8 +25,8 @@ public class PatientDto {
 
     @NotNull(message = "birth date not exist or not in past")
     @Past(message = "birth date not exist or not in past")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birthDate;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthDate;
 
     private String gender;
 

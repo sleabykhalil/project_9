@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -42,8 +43,9 @@ class PatientControllerTestIT {
         PatientDto patientDto = PatientDto.builder()
                 .id(1L)
                 .firstName("test")
-                .lastName("test").
-                build();
+                .lastName("test")
+                .birthDate(LocalDate.parse("2020-10-10"))
+                .build();
         //when
         when(microservicePatientProxyMock.getPatientById("1")).thenReturn(patientDto);
         //then
@@ -66,8 +68,9 @@ class PatientControllerTestIT {
         PatientDto patientDto2 = PatientDto.builder()
                 .id(2L)
                 .firstName("test2")
-                .lastName("test").
-                build();
+                .lastName("test")
+                .birthDate(LocalDate.parse("2020-10-10"))
+                        .                build();
         //when
         when(microservicePatientProxyMock.getPatientById("1")).thenReturn(patientDto1);
         when(microservicePatientProxyMock.getPatientByFullName("test2", "test")).thenReturn(patientDto2);
@@ -92,32 +95,32 @@ class PatientControllerTestIT {
     @Test
     void validatePatientWhenNotValid() throws Exception {
         //given
-        Date date = DateTimeUtils.getDateFromStringWithFormat( "10-10-2020","dd-MM-yyyy");
+        Date date = DateTimeUtils.getDateFromStringWithFormat("10-10-2020", "dd-MM-yyyy");
 
         PatientDto patientDto = PatientDto.builder()
                 .id(1L)
                 .firstName("test")
                 //.lastName("test")
-                .birthDate(date)
+                .birthDate(LocalDate.parse("2020-10-10"))
                 .build();
 
         //when
         //then
         mockMvc.perform(post("/patients/validate")
-                        .flashAttr("patientDto",patientDto))
+                        .flashAttr("patientDto", patientDto))
                 .andExpect(status().isOk());
     }
 
     @Test
     void validatePatientWhenValidThenRedirect() throws Exception {
         //given
-        Date date = DateTimeUtils.getDateFromStringWithFormat( "10-10-2020","dd-MM-yyyy");
+        Date date = DateTimeUtils.getDateFromStringWithFormat("10-10-2020", "dd-MM-yyyy");
 
         PatientDto newPatientDto = PatientDto.builder()
                 .id(1L)
                 .firstName("test")
                 .lastName("test")
-                .birthDate(date)
+                .birthDate(LocalDate.parse("2020-10-10"))
                 .build();
         //when
         when(microservicePatientProxyMock.addPatient(any())).thenReturn(newPatientDto);

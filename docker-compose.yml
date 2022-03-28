@@ -63,14 +63,14 @@ services:
     depends_on:
       - mongo
 
-  microservice.patientui:
-    build: ./patientui
-    container_name: ui_ms
-    ports:
-      - 8080:8080
-    depends_on:
-      - microservice.patientmedicalhistory
-      - microservice.patient
+#  microservice.patientui:
+#    build: ./patientui
+#    container_name: ui_ms
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - microservice.patientmedicalhistory
+#      - microservice.patient
 
 volumes:
   postgresqldata:
