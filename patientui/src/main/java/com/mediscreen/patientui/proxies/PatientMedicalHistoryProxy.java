@@ -4,6 +4,8 @@ import com.mediscreen.patientui.dto.MedicalHistoryDto;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -16,9 +18,12 @@ public interface PatientMedicalHistoryProxy {
     Set<String> aggregateMedicalHistory(@RequestParam String id);
 
     @GetMapping
-    MedicalHistoryDto findMedicalHistory(@RequestParam @Parameter(description = "medical record id", required = true) String id) ;
+    MedicalHistoryDto findMedicalHistory(@RequestParam @Parameter(description = "medical record id", required = true) String id);
 
     @GetMapping("/patient_medical_history/findbypatientid")
-    List<MedicalHistoryDto> findByPatientId(@RequestParam String patientId) ;
+    List<MedicalHistoryDto> findByPatientId(@RequestParam String patientId);
 
-    }
+    @PostMapping("/patient_medical_history")
+    MedicalHistoryDto addMedicalHistory(@RequestBody MedicalHistoryDto medicalHistoryDto);
+
+}
