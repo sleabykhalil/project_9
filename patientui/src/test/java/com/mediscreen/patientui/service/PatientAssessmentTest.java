@@ -1,9 +1,14 @@
 package com.mediscreen.patientui.service;
 
 import com.mediscreen.patientui.dto.PatientDto;
+import com.mediscreen.patientui.proxies.MicroservicePatientProxy;
+import com.mediscreen.patientui.proxies.PatientMedicalHistoryProxy;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,12 +16,17 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(MockitoExtension.class)
 class PatientAssessmentTest {
     PatientAssessment patientAssessmentServiceUnderTest;
+    @Mock
+    PatientMedicalHistoryProxy patientMedicalHistoryProxyMock;
+    @Mock
+    MicroservicePatientProxy microservicePatientProxyMock;
 
     @BeforeEach
     void setUp() {
-        patientAssessmentServiceUnderTest = new PatientAssessment();
+        patientAssessmentServiceUnderTest = new PatientAssessment(microservicePatientProxyMock,patientMedicalHistoryProxyMock);
     }
 
     @Test
@@ -212,6 +222,7 @@ class PatientAssessmentTest {
         //then
         assertThat(result).contains("None");
     }
+
     @Test
     void getAssessmentWhenWomanMoreThan30With2KeywordThenReturnBorderline() {
         //given
@@ -227,6 +238,7 @@ class PatientAssessmentTest {
         //then
         assertThat(result).contains("Borderline");
     }
+
     @Test
     void getAssessmentWhenWomanMoreThan30With6KeywordThenReturnInDanger() {
         //given
@@ -246,6 +258,7 @@ class PatientAssessmentTest {
         //then
         assertThat(result).contains("In danger");
     }
+
     @Test
     void getAssessmentWhenWomanMoreThan30With8KeywordThenReturnEarlyOnset() {
         //given

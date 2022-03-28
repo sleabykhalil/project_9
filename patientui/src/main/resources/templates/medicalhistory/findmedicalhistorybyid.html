@@ -15,7 +15,10 @@
 
 <div class="container">
     <div class="row">
-        <a class="btn btn-primary btn-sm" th:href="@{/medicalhistory/addmedicalhistory(patientId=${patientId})}">Add New Medical History</a>
+        <a class="btn btn-primary btn-sm" th:href="@{/medicalhistory/addmedicalhistory(patientId=${patientId})}">Add New
+            Medical History</a>
+        <input class="form-control" disabled id="assess" name="assess" placeholder="assessment"
+               readonly th:value="${patientAssessment}" type="text">
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -25,7 +28,7 @@
             </thead>
             <tbody>
             <tr class="text-center" th:each="medicalHistoryDto : ${medicalHistoryDtoList}">
-                <td style="display:none" th:text="${medicalHistoryDto.id}" >id</td>
+                <td style="display:none" th:text="${medicalHistoryDto.id}">id</td>
                 <td th:text="${medicalHistoryDto.patientId}">Patient Id</td>
                 <td th:text="${medicalHistoryDto.notes}">Notes</td>
 
