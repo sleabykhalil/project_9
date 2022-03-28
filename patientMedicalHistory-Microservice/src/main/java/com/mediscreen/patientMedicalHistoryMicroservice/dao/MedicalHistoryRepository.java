@@ -17,22 +17,23 @@ public interface MedicalHistoryRepository extends MongoRepository<MedicalHistory
 
     /**
      * return index of word if exist
+     *
      * @param id
      * @return
      */
     @Aggregation(pipeline = {"{$match : {patientId: :#{#id} } },",
             "{$project:{          " +
-                    "Hémoglobine_A1C: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Hémoglobine A1C' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes,' Hémoglobine A1C' ]}}},\n" +
-                    "Microalbumine: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Microalbumine'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Microalbumine' ]}}},\n" +
-                    "Taille: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Taille'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Taille' ]}}},\n" +
-                    "Poids: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Poids'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Poids' ]}}},\n" +
-                    "Fumeur: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Fumeur' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Fumeur' ]}}},\n" +
-                    "Anormal: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Anormal' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Anormal' ]}}},\n" +
-                    "Cholestérol: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Cholestérol' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Cholestérol' ]}}},\n" +
-                    "Vertige: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Vertige' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Vertige' ]}}},\n" +
-                    "Rechute: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Rechute' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Rechute' ]}}},\n" +
-                    "Réaction: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes,'Réaction' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Réaction' ]}}},\n" +
-                    "Anticorps: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Anticorps' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Anticorps' ]}}}\n" +
+                    "Hémoglobine_A1C: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'hémoglobine a1c' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes },'hémoglobine a1c' ]}}},\n" +
+                    "Microalbumine: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'microalbumine'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'microalbumine' ]}}},\n" +
+                    "Taille: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'taille'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'taille' ]}}},\n" +
+                    "Poids: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'poids'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'poids' ]}}},\n" +
+                    "Fumeur: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'fumeur' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'fumeur' ]}}},\n" +
+                    "Anormal: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'anormal' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'anormal' ]}}},\n" +
+                    "Cholestérol: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'cholestérol' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'cholestérol' ]}}},\n" +
+                    "Vertige: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'vertige' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'vertige' ]}}},\n" +
+                    "Rechute: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'rechute' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'rechute' ]}}},\n" +
+                    "Réaction: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes },'réaction' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'réaction' ]}}},\n" +
+                    "Anticorps: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'anticorps' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'anticorps' ]}}}\n" +
                     "}\n" +
                     "}",
             "{$unset : [\"_id\"]}"})
@@ -40,17 +41,17 @@ public interface MedicalHistoryRepository extends MongoRepository<MedicalHistory
 
     @Aggregation(pipeline = {"{$match : {patientId: :#{#id} } },",
             "{$project:{          " +
-                    "Hémoglobine_A1C: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Hemoglobin A1C' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes,' Hémoglobine A1C' ]}}},\n" +
-                    "Microalbumine: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Microalbumin'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Microalbumine' ]}}},\n" +
-                    "Taille: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Height'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Taille' ]}}},\n" +
-                    "Poids: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Weight'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Poids' ]}}},\n" +
-                    "Fumeur: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Smoker' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Fumeur' ]}}},\n" +
-                    "Anormal: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Abnormal' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Anormal' ]}}},\n" +
-                    "Cholestérol: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Cholesterol' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Cholestérol' ]}}},\n" +
-                    "Vertige: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Dizziness' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Vertige' ]}}},\n" +
-                    "Rechute: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Relapse' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Rechute' ]}}},\n" +
-                    "Réaction: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes,'Reaction' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Réaction' ]}}},\n" +
-                    "Anticorps: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ $notes, 'Antibodies' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ $notes, 'Anticorps' ]}}}\n" +
+                    "Hémoglobine_A1C: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'hemoglobin a1c' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes },'hemoglobin a1c' ]}}},\n" +
+                    "Microalbumine: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'microalbumin'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'microalbumin' ]}}},\n" +
+                    "Taille: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'height'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'height' ]}}},\n" +
+                    "Poids: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'weight'] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'weight' ]}}},\n" +
+                    "Fumeur: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'smoker' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'smoker' ]}}},\n" +
+                    "Anormal: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'abnormal' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'abnormal' ]}}},\n" +
+                    "Cholestérol: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'cholesterol' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'cholesterol' ]}}},\n" +
+                    "Vertige: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'dizziness' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'dizziness' ]}}},\n" +
+                    "Rechute: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'relapse' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'relapse' ]}}},\n" +
+                    "Réaction: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes },'reaction' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'reaction' ]}}},\n" +
+                    "Anticorps: {  $cond: { if: { $eq: [-1, {$indexOfCP: [ {$toLower: $notes }, 'antibodies' ] } ] }, then: $$REMOVE, else:  { $indexOfCP: [ {$toLower: $notes }, 'antibodies' ]}}}\n" +
                     "}\n" +
                     "}",
             "{$unset : [\"_id\"]}"})
