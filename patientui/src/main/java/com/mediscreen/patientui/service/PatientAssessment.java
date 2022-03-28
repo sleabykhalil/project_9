@@ -2,6 +2,10 @@ package com.mediscreen.patientui.service;
 
 import com.mediscreen.patientui.constant.Constant;
 import com.mediscreen.patientui.dto.PatientDto;
+import com.mediscreen.patientui.proxies.MicroservicePatientProxy;
+import com.mediscreen.patientui.proxies.PatientMedicalHistoryProxy;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -10,8 +14,16 @@ import java.util.Date;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PatientAssessment {
+    private final MicroservicePatientProxy patientProxy;
+    private final PatientMedicalHistoryProxy medicalHistoryProxy;
 
+    public String getAssessmentById(String patientId){
+        PatientDto patientDto = patientProxy.getPatientById(patientId);
+        Set<String> patientSetOfKeyWord = medicalHistoryProxy.aggregateMedicalHistory(patientDto.getId().toString());
+        return getAssessment(patientDto, patientSetOfKeyWord);
+    }
     public String getAssessment(PatientDto patientDto, Set<String> patientSetOfKeyWord) {
 
         if (patientDto.getGender().equals("M")) {

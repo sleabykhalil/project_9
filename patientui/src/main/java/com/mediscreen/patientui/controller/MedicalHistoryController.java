@@ -2,6 +2,7 @@ package com.mediscreen.patientui.controller;
 
 import com.mediscreen.patientui.dto.MedicalHistoryDto;
 import com.mediscreen.patientui.proxies.PatientMedicalHistoryProxy;
+import com.mediscreen.patientui.service.PatientAssessment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MedicalHistoryController {
     final PatientMedicalHistoryProxy patientMedicalHistoryProxy;
+    final PatientAssessment patientAssessmentService;
 
     @GetMapping("/medicalhistory/findmedicalhistorybyid")
     public String findAllMedicalHistoryById(Model model,
@@ -26,6 +28,8 @@ public class MedicalHistoryController {
         medicalHistoryDtoList = patientMedicalHistoryProxy.findByPatientId(patientId);
         model.addAttribute("medicalHistoryDtoList", medicalHistoryDtoList);
         model.addAttribute("patientId", patientId);
+        String patientAssessment = patientAssessmentService.getAssessmentById(patientId);
+        model.addAttribute("patientAssessment", patientAssessment);
         return "medicalhistory/findmedicalhistorybyid";
     }
 
