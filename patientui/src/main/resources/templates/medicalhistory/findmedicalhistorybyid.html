@@ -14,52 +14,25 @@
 <button class="btn btn-success" type="submit"> Patient UI</button>
 
 <div class="container">
-    <form th:action="@{/patients/findpatient}">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="">Id ,first and last name</span>
-            </div>
-            <input class="form-control" th:name="patientId" type="number">
-            <input class="form-control" th:name="patientFirstname" type="text">
-            <input class="form-control" th:name="patientLastName" type="text">
-            <input class="form-control" type="submit">
-            <div class="input-group-append">
-
-                <!--                <a class="btn btn-outline-secondary"-->
-                <!--                   th:href="@{/patients/findpatient(patientId=${patientId}, patientFirstname=${patientFirstname}, patientLastName=${patientLastName})}"-->
-                <!--                   type="button">Search</a>-->
-            </div>
-        </div>
-    </form>
     <div class="row">
-        <a class="btn btn-primary btn-sm" th:href="@{/patients/addpatient}">Add New Patient</a>
+<!--        <a class="btn btn-primary btn-sm" th:href="@{/patients/addpatient}">Add New Patient</a>-->
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th>Patient Id</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Birth day</th>
-                <th>Action</th>
-                <th>Medical history</th>
-
+                <th>Notes</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="text-center" th:each="patientDto : ${patientDtoList}">
-                <td th:text="${patientDto.id}">id</td>
-                <td th:text="${patientDto.firstName}">First name</td>
-                <td th:text="${patientDto.lastName}">Last name</td>
-                <td th:text="${patientDto.birthDate}">Birth day</td>
+            <tr class="text-center" th:each="medicalHistoryDto : ${medicalHistoryDtoList}">
+                <td style="display:none" th:text="${medicalHistoryDto.id}" >id</td>
+                <td th:text="${medicalHistoryDto.patientId}">Patient Id</td>
+                <td th:text="${medicalHistoryDto.notes}">Notes</td>
 
-                <td>
-                    <a role="button" th:href="@{/patients/updatepatient(id=${patientDto.id})}">Edit</a> |
-                    <a role="button" th:href="@{/patients/deletepatient(id=${patientDto.id})}">Delete</a></td>
-                <td>
-                    <a role="button" th:href="@{/medicalhistory/findmedicalhistorybyid(patientId=${patientDto.id})}">Medical history</a></td>
-            </tr>
             </tbody>
         </table>
+        <a class="btn btn-primary" th:href="@{/patients/findpatient}"> Return</a>
+
     </div>
     <!--    <form class="px-4 py-3" th:action="@{patients/findPatient}" th:object="${patientDto}" method="POST">-->
     <!--        <div class="form-group">-->
