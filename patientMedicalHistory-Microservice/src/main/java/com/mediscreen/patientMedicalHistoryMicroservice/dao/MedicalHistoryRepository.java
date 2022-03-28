@@ -8,8 +8,12 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface MedicalHistoryRepository extends MongoRepository<MedicalHistory, String> {
+
+    List<MedicalHistory> findByPatientId(String patientId);
 
     /**
      * return index of word if exist

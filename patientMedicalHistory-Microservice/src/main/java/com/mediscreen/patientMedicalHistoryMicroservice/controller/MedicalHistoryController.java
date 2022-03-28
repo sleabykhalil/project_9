@@ -96,4 +96,9 @@ public class MedicalHistoryController {
         return medicalHistoryService.aggregateMedicalHistory(id);
     }
 
+    @GetMapping("/findbypatientid")
+    public List<MedicalHistory> findByPatientId(@RequestParam String patientId) {
+        return medicalHistoryService.findByPatientId(patientId);
+    }
+
 }

@@ -19,4 +19,6 @@ public interface MedicalHistoryService {
     void deleteMedicalHistory(String id);
 
     Set<String> aggregateMedicalHistory(String id);
+
+    List<MedicalHistory> findByPatientId(String patientId);
 }
