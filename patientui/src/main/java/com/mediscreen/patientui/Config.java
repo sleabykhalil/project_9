@@ -1,27 +1,30 @@
-package com.mediscreen.patientApi.utils;
+package com.mediscreen.patientui;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
-import lombok.experimental.UtilityClass;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@UtilityClass
-public class JsonUtils {
+@Configuration
+public class Config {
 
-    public String asJsonString(Object obj) throws JsonProcessingException {
-
-/*        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);*/
+//    @Bean
+//    public ObjectMapper objectMapper() {
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.findAndRegisterModules();
+//        return mapper;
+//    }
+    @Bean
+    public ObjectMapper objectMapper() {
         ObjectMapper mapper = JsonMapper.builder() // or different mapper for other format
                 .addModule(new ParameterNamesModule())
                 .addModule(new Jdk8Module())
                 .addModule(new JavaTimeModule())
                 // and possibly other configuration, modules, then:
                 .build();
-        return mapper.writeValueAsString(obj);
+        return mapper;
     }
 }

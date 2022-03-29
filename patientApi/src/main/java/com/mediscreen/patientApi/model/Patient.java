@@ -3,7 +3,7 @@ package com.mediscreen.patientApi.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -27,7 +27,7 @@ public class Patient {
     private String lastName;
 
     @Column(name = "birth_date")
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "gender")
     private String gender;

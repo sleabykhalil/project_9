@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Locale;
 
 @Slf4j
@@ -53,7 +54,7 @@ public class PatientControllerNonBrowser {
                 .firstName(firstName)
                 .gender(gender)
                 .address(address)
-                .birthDate(formatter.parse(birthDate))
+                .birthDate(LocalDate.parse(birthDate))
                 .phoneNumber(phoneNumber).build());
         return new ResponseEntity<String>("Patient Added id=[ " + patient.getId() + " ]", HttpStatus.OK);
     }

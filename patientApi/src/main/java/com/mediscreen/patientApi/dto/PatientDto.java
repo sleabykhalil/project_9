@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -18,7 +18,7 @@ public class PatientDto {
 
     private String lastName;
 
-    private Date birthDate;
+    private LocalDate birthDate;
 
     private String gender;
 

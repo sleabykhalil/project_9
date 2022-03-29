@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,7 +48,7 @@ class PatientControllerTest {
                 .id(1L)
                 .firstName("test")
                 .lastName("test")
-                .birthDate(date)
+                .birthDate(LocalDate.parse("2020-10-10"))
                 .build();
 
         when(mockPatientProxy.getPatientById("1")).thenReturn(patientDto);
@@ -67,7 +68,7 @@ class PatientControllerTest {
                 .id(1L)
                 .firstName("test")
                 .lastName("test")
-                .birthDate(date)
+                .birthDate(LocalDate.parse("2020-10-10"))
                 .build();
         assertThat(patientController.addNewPatient(patientDto)).isEqualTo("patients/addpatient");
     }
@@ -81,7 +82,7 @@ class PatientControllerTest {
                 .id(1L)
                 .firstName("test")
                 .lastName("test")
-                .birthDate(date)
+                .birthDate(LocalDate.parse("2020-10-10"))
                 .build();
 
         when(mockBindingResult.hasErrors()).thenReturn(true);
@@ -101,7 +102,7 @@ class PatientControllerTest {
                 .id(1L)
                 .firstName("test")
                 .lastName("test")
-                .birthDate(date)
+                .birthDate(LocalDate.parse("2020-10-10"))
                 .build();
 
         when(mockBindingResult.hasErrors()).thenReturn(false);

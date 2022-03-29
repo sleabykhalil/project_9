@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<button class="btn btn-success" type="submit"> Patient UI</button>
+<a class="btn btn-success" href="/"> Patient UI</a>
 
 <div class="container">
     <form class="px-4 py-3" method="POST" th:action="@{validate}" th:object="${patientDto}">
@@ -50,6 +50,7 @@
                     Woman
                 </label>
             </div>
+            <p class="text-danger" th:errors="*{gender}" th:if="${#fields.hasErrors('gender')}"></p>
         </div>
         <div class="form-group">
             <label for="address">address</label>

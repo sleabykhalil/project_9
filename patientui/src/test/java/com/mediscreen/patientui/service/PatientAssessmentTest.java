@@ -3,14 +3,13 @@ package com.mediscreen.patientui.service;
 import com.mediscreen.patientui.dto.PatientDto;
 import com.mediscreen.patientui.proxies.MicroservicePatientProxy;
 import com.mediscreen.patientui.proxies.PatientMedicalHistoryProxy;
-import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,14 +25,16 @@ class PatientAssessmentTest {
 
     @BeforeEach
     void setUp() {
-        patientAssessmentServiceUnderTest = new PatientAssessment(microservicePatientProxyMock,patientMedicalHistoryProxyMock);
+        patientAssessmentServiceUnderTest = new PatientAssessment(microservicePatientProxyMock, patientMedicalHistoryProxyMock);
     }
 
     @Test
     void getAssessmentWhenManLessThan30WithOneKeywordThenReturnNone() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 10);
-        PatientDto patientDto = PatientDto.builder().gender("M").birthDate(dateOfBirth).build();
+        LocalDate dateOfBirth = LocalDate.now().plusYears(10);
+        PatientDto patientDto = PatientDto.builder().gender("M")
+                .birthDate(dateOfBirth)
+                .build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("first word");
 
@@ -48,7 +49,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenManMoreThan30WithOneKeywordThenReturnNone() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 31);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(31);
         PatientDto patientDto = PatientDto.builder().gender("M").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("first word");
@@ -63,7 +64,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenManLessThan30With3KeywordThenReturnInDanger() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 10);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(10);
         PatientDto patientDto = PatientDto.builder().gender("M").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("1 word");
@@ -80,7 +81,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenManLessThan30With5KeywordThenReturnEarlyOnset() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 10);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(10);
         PatientDto patientDto = PatientDto.builder().gender("M").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("1 word");
@@ -99,7 +100,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenManMoreThan30With2KeywordThenReturnEarlyOnset() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 31);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(31);
         PatientDto patientDto = PatientDto.builder().gender("M").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("1 word");
@@ -115,7 +116,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenManMoreThan30With6KeywordThenReturnInDanger() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 31);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(31);
         PatientDto patientDto = PatientDto.builder().gender("M").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("1 word");
@@ -135,7 +136,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenManMoreThan30With8KeywordThenReturnEarlyOnset() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 31);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(31);
         PatientDto patientDto = PatientDto.builder().gender("M").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("1 word");
@@ -157,7 +158,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenWomanLessThan30WithOneKeywordThenReturnNone() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 10);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(10);
         PatientDto patientDto = PatientDto.builder().gender("F").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("1 word");
@@ -172,7 +173,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenWomanLessThan30With4KeywordThenReturnInDanger() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 10);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(10);
         PatientDto patientDto = PatientDto.builder().gender("F").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("1 word");
@@ -190,7 +191,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenWomanLessThan30With7KeywordThenReturnEarlyOnset() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 10);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(10);
         PatientDto patientDto = PatientDto.builder().gender("F").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("1 word");
@@ -211,7 +212,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenWomanMoreThan30WithOneKeywordThenReturnNone() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 31);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(31);
         PatientDto patientDto = PatientDto.builder().gender("F").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("first word");
@@ -226,7 +227,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenWomanMoreThan30With2KeywordThenReturnBorderline() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 31);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(31);
         PatientDto patientDto = PatientDto.builder().gender("F").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("1 word");
@@ -242,7 +243,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenWomanMoreThan30With6KeywordThenReturnInDanger() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 31);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(31);
         PatientDto patientDto = PatientDto.builder().gender("F").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("1 word");
@@ -262,7 +263,7 @@ class PatientAssessmentTest {
     @Test
     void getAssessmentWhenWomanMoreThan30With8KeywordThenReturnEarlyOnset() {
         //given
-        Date dateOfBirth = DateUtils.addYears(new Date(), 31);
+        LocalDate dateOfBirth = LocalDate.now().plusYears(31);
         PatientDto patientDto = PatientDto.builder().gender("F").birthDate(dateOfBirth).build();
         Set<String> patientSetOfKeyWord = new HashSet<>();
         patientSetOfKeyWord.add("1 word");
@@ -280,6 +281,5 @@ class PatientAssessmentTest {
         //then
         assertThat(result).contains("Early onset");
     }
-
 
 }
