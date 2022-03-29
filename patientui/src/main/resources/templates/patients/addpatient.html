@@ -50,6 +50,7 @@
                     Woman
                 </label>
             </div>
+            <p class="text-danger" th:errors="*{gender}" th:if="${#fields.hasErrors('gender')}"></p>
         </div>
         <div class="form-group">
             <label for="address">address</label>
