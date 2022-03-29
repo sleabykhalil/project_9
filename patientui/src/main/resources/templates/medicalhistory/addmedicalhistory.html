@@ -23,8 +23,8 @@
         </div>
         <div class="form-group">
             <label for="notes">Notes</label>
-            <input class="form-control" id="notes" name="notes" placeholder="notes" th:field="*{notes}"
-                   type="text">
+            <textarea class="form-control" id="notes" name="notes" placeholder="notes" rows="10"
+                      th:field="*{notes}"></textarea>
             <p class="text-danger" th:errors="*{notes}" th:if="${#fields.hasErrors('notes')}"></p>
         </div>
 

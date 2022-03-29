@@ -1,4 +1,4 @@
-package com.mediscreen.patientui;
+package com.mediscreen.patientui.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
