@@ -27,10 +27,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="text-center" th:each="medicalHistoryDto : ${medicalHistoryDtoList}">
+            <tr class="text-left" th:each="medicalHistoryDto : ${medicalHistoryDtoList}">
                 <td style="display:none" th:text="${medicalHistoryDto.id}">id</td>
                 <td th:text="${medicalHistoryDto.patientId}">Patient Id</td>
-                <td th:text="${medicalHistoryDto.notes}">Notes</td>
+                <td   style="white-space : break-spaces" th:text="${medicalHistoryDto.notes}">Notes</td>
 
             </tbody>
         </table>
