@@ -22,15 +22,21 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Patient Id</th>
+<!--                <th>Patient Id</th>-->
                 <th>Notes</th>
+                <th>Action</th>
+
             </tr>
             </thead>
             <tbody>
             <tr class="text-left" th:each="medicalHistoryDto : ${medicalHistoryDtoList}">
-                <td style="display:none" th:text="${medicalHistoryDto.id}">id</td>
-                <td th:text="${medicalHistoryDto.patientId}">Patient Id</td>
-                <td   style="white-space : break-spaces" th:text="${medicalHistoryDto.notes}">Notes</td>
+                <td style="display:none" th:text="${medicalHistoryDto.id}"></td>
+                <td style="display:none" th:text="${medicalHistoryDto.patientId}"></td>
+                <td style="white-space : break-spaces" th:text="${medicalHistoryDto.notes}">Notes</td>
+                <td>
+                    <a role="button" th:href="@{/medicalhistory/updatemedicalhistory(id=${medicalHistoryDto.id})}">Edit</a> |
+                    <a href="#" role="button">Delete</a></td>
+                <td>
 
             </tbody>
         </table>
