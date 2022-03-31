@@ -3,10 +3,7 @@ package com.mediscreen.patientui.proxies;
 import com.mediscreen.patientui.dto.MedicalHistoryDto;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
@@ -17,7 +14,7 @@ public interface PatientMedicalHistoryProxy {
     @GetMapping("/patient_medical_history/aggregateMedicalHistory")
     Set<String> aggregateMedicalHistory(@RequestParam String id);
 
-    @GetMapping
+    @GetMapping("/patient_medical_history")
     MedicalHistoryDto findMedicalHistory(@RequestParam @Parameter(description = "medical record id", required = true) String id);
 
     @GetMapping("/patient_medical_history/findbypatientid")
@@ -26,4 +23,7 @@ public interface PatientMedicalHistoryProxy {
     @PostMapping("/patient_medical_history")
     MedicalHistoryDto addMedicalHistory(@RequestBody MedicalHistoryDto medicalHistoryDto);
 
+    @PutMapping("/patient_medical_history/id")
+    MedicalHistoryDto updateMedicalHistoryById(@RequestParam String id,
+                                               @RequestBody MedicalHistoryDto medicalHistory) ;
 }

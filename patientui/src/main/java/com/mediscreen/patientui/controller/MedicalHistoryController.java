@@ -50,4 +50,24 @@ public class MedicalHistoryController {
             return "/medicalhistory/addmedicalhistory";
         }
     }
+
+    @GetMapping("/medicalhistory/updatemedicalhistory")
+    public String getUpdatePatientForm(@RequestParam(name = "id") String id, Model model) {
+        MedicalHistoryDto medicalHistoryDto = patientMedicalHistoryProxy.findMedicalHistory(id);
+        model.addAttribute("medicalHistoryDto", medicalHistoryDto);
+        return "medicalhistory/updatemedicalhistory";
+    }
+
+    @PostMapping("/medicalhistory/updatemedicalhistory")
+    public String updatePatient(@RequestParam(name = "id") String id,
+                                @Valid  MedicalHistoryDto medicalHistoryDto,
+                                BindingResult result,
+                                Model model) {
+        if (!result.hasErrors()) {
+            MedicalHistoryDto newMedicalHistoryDto = patientMedicalHistoryProxy.updateMedicalHistoryById(id,medicalHistoryDto);
+            return "redirect:findmedicalhistorybyid?patientId=".concat(newMedicalHistoryDto.getPatientId());
+        } else {
+            return "medicalhistory/updatemedicalhistory?id=".concat(id);
+        }
+    }
 }

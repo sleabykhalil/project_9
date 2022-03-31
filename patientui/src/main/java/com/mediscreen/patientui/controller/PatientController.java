@@ -33,7 +33,7 @@ public class PatientController {
                               @RequestParam(value = "patientLastName", required = false) String patientLastName) {
 
         List<PatientDto> patientDtoList = new ArrayList<>();
-        if (patientId != null) {
+        if ((patientId != null) && (!patientId.isEmpty()) && (!patientId.trim().isBlank())) {
             PatientDto patientDto = patientProxy.getPatientById(patientId);
             addIfNotnullOrNotExist(patientDtoList, patientDto);
         }

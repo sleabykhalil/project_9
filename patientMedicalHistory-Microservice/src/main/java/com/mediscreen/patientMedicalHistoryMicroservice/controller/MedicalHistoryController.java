@@ -40,26 +40,26 @@ public class MedicalHistoryController {
         return medicalHistoryService.insert(medicalHistory);
     }
 
-    /**
-     * Get all medical history
-     *
-     * @return All medical history
-     */
-    @GetMapping("/all")
-    public List<MedicalHistory> findAllMedicalHistory() {
-        return medicalHistoryService.getAllMedicalHistory();
-    }
+//    /**
+//     * Get all medical history
+//     *
+//     * @return All medical history
+//     */
+//    @GetMapping("/all")
+//    public List<MedicalHistory> findAllMedicalHistory() {
+//        return medicalHistoryService.getAllMedicalHistory();
+//    }
 
     /**
-     * Read patient medical history
+     * Find patient medical history by id
      *
      * @param id patient id to get medical history
      * @return medical history by patient id
      */
     @Operation(summary = "Get patient medical history by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New patients found successfully"),
-            @ApiResponse(responseCode = "400", description = "Patient cannot be found")
+            @ApiResponse(responseCode = "200", description = "medical history found successfully"),
+            @ApiResponse(responseCode = "400", description = "medical history cannot be found")
     })
     @GetMapping
     public MedicalHistory findMedicalHistory(@RequestParam @Parameter(description = "medical record id", required = true) String id) {
@@ -73,29 +73,47 @@ public class MedicalHistoryController {
      * @param medicalHistory new medical history
      * @return updated medical history
      */
-    @PutMapping
-    public MedicalHistory updateMedicalHistory(@RequestParam @Parameter(description = "medical record id", required = true) String id,
-                                               @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Update patient medical history",
-                                                       required = true, content = @Content(schema = @Schema(implementation = MedicalHistory.class)))
-                                               @RequestBody MedicalHistory medicalHistory) {
+    @Operation(summary = "Update medical history")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Medical history updated successfully"),
+    })
+    @PutMapping("/id")
+    public MedicalHistory updateMedicalHistoryById(@RequestParam @Parameter(description = "medical record id", required = true) String id,
+                                                   @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Update patient medical history",
+                                                           required = true, content = @Content(schema = @Schema(implementation = MedicalHistory.class)))
+                                                   @RequestBody MedicalHistory medicalHistory) {
         return medicalHistoryService.updateMedicalHistory(id, medicalHistory);
     }
 
-    /**
-     * Delete patient medical history
-     *
-     * @param id patient medical record id
-     */
-    @DeleteMapping
-    public void deleteMedicalHistory(@RequestParam @Parameter(description = "medical record id", required = true) String id) {
-        medicalHistoryService.deleteMedicalHistory(id);
-    }
-
+    //    /**
+//     * Delete patient medical history
+//     *
+//     * @param id patient medical record id
+//     */
+//    @DeleteMapping
+//    public void deleteMedicalHistory(@RequestParam @Parameter(description = "medical record id", required = true) String id) {
+//        medicalHistoryService.deleteMedicalHistory(id);
+//    }
+    @Operation(summary = "Aggregate medical history")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Aggregate patient medical history successfully"),
+    })
     @GetMapping("/aggregateMedicalHistory")
     public Set<String> aggregateMedicalHistory(@RequestParam String id) {
         return medicalHistoryService.aggregateMedicalHistory(id);
     }
 
+    /**
+     * Find patient medical history by patient Id
+     *
+     * @param patientId patient id to get medical history
+     * @return medical history by patient id
+     */
+    @Operation(summary = "Get medical history by patient Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Patient medical history found successfully"),
+            @ApiResponse(responseCode = "400", description = "patient medical history cannot be found")
+    })
     @GetMapping("/findbypatientid")
     public List<MedicalHistory> findByPatientId(@RequestParam String patientId) {
         return medicalHistoryService.findByPatientId(patientId);
