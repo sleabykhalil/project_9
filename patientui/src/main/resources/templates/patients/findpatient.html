@@ -17,11 +17,11 @@
     <form th:action="@{/patients/findpatient}">
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="">Id ,first and last name</span>
+                <span class="input-group-text" id=""> input [Id] or [first and last name]</span>
             </div>
-            <input class="form-control" th:name="patientId" type="number">
-            <input class="form-control" th:name="patientFirstname" type="text">
-            <input class="form-control" th:name="patientLastName" type="text">
+            <input class="form-control" placeholder="Patient Id" th:name="patientId"  type="number">
+            <input class="form-control" placeholder="prénom" th:name="patientFirstname"  type="text">
+            <input class="form-control" placeholder="nom" th:name="patientLastName" type="text">
             <input class="form-control" type="submit">
             <div class="input-group-append">
 
@@ -54,7 +54,8 @@
 
                 <td>
                     <a role="button" th:href="@{/patients/updatepatient(id=${patientDto.id})}">Edit</a> |
-                    <a role="button" th:href="@{/patients/deletepatient(id=${patientDto.id})}">Delete</a></td>
+<!--                    <a role="button" th:href="@{/patients/deletepatient(id=${patientDto.id})}" >Delete</a></td>-->
+                    <a href="#" role="button" >Delete</a></td>
                 <td>
                     <a role="button" th:href="@{/medicalhistory/findmedicalhistorybyid(patientId=${patientDto.id})}">Medical history</a></td>
             </tr>

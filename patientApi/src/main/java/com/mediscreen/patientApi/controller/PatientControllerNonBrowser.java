@@ -1,14 +1,15 @@
 package com.mediscreen.patientApi.controller;
 
-import com.mediscreen.patientApi.dto.NonBrowserPatientDto;
 import com.mediscreen.patientApi.dto.mapper.PatientMapper;
 import com.mediscreen.patientApi.model.Patient;
 import com.mediscreen.patientApi.service.PatientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,15 +29,20 @@ public class PatientControllerNonBrowser {
 
     final PatientMapper patientMapper;
 
-    @PostMapping(value = "/patient/addWithDto", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+/*    @PostMapping(value = "/patient/addWithDto", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public ResponseEntity<String> handleNonBrowserSubmissions(NonBrowserPatientDto nonBrowserPatientDto) {
         log.debug("add new patient by non browser =[{}]", nonBrowserPatientDto.toString());
 
         Patient patient = patientMapper.nonBrowserPatientDtoToPatient(nonBrowserPatientDto);
         patient = patientService.save(patient);
         return new ResponseEntity<String>("Patient Added id=[ " + patient.getId() + " ]", HttpStatus.OK);
-    }
+    }*/
 
+    @Operation(summary = "Add patient for non browser")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "New patient added successfully"),
+            @ApiResponse(responseCode = "400", description = "Patient cannot be added")
+    })
     @PostMapping(value = "/patient/add", params = {"family", "given", "dob", "sex", "address", "phone"})
     public ResponseEntity<String> handleNonBrowserSubmissions(
             @RequestParam("family") String lastName,
