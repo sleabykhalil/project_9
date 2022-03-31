@@ -40,16 +40,6 @@ public class MedicalHistoryController {
         return medicalHistoryService.insert(medicalHistory);
     }
 
-//    /**
-//     * Get all medical history
-//     *
-//     * @return All medical history
-//     */
-//    @GetMapping("/all")
-//    public List<MedicalHistory> findAllMedicalHistory() {
-//        return medicalHistoryService.getAllMedicalHistory();
-//    }
-
     /**
      * Find patient medical history by id
      *
@@ -85,15 +75,6 @@ public class MedicalHistoryController {
         return medicalHistoryService.updateMedicalHistory(id, medicalHistory);
     }
 
-    //    /**
-//     * Delete patient medical history
-//     *
-//     * @param id patient medical record id
-//     */
-//    @DeleteMapping
-//    public void deleteMedicalHistory(@RequestParam @Parameter(description = "medical record id", required = true) String id) {
-//        medicalHistoryService.deleteMedicalHistory(id);
-//    }
     @Operation(summary = "Aggregate medical history")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Aggregate patient medical history successfully"),

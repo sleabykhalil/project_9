@@ -10,13 +10,9 @@ import java.util.Set;
 public interface MedicalHistoryService {
     MedicalHistory insert(MedicalHistory medicalHistory);
 
-    List<MedicalHistory> getAllMedicalHistory();
-
     MedicalHistory findById(String id);
 
     MedicalHistory updateMedicalHistory(String id, MedicalHistory medicalHistory);
-
-    void deleteMedicalHistory(String id);
 
     Set<String> aggregateMedicalHistory(String id);
 

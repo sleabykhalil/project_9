@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -29,13 +26,13 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
     }
 
     @Override
-    public List<MedicalHistory> getAllMedicalHistory() {
-        return medicalHistoryRepository.findAll();
-    }
-
-    @Override
     public MedicalHistory findById(String id) {
-        return medicalHistoryRepository.findById(id).orElseThrow(RuntimeException::new);
+        Optional<MedicalHistory> medicalHistory = medicalHistoryRepository.findById(id);
+        if (medicalHistory.isPresent()) {
+            return medicalHistory.get();
+        } else {
+            throw new RuntimeException("Medical History with id =[" + id + "] not found");
+        }
     }
 
     @Override
@@ -44,15 +41,10 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
         return medicalHistoryRepository.save(medicalHistory);
     }
 
-    @Override
-    public void deleteMedicalHistory(String id) {
-        if (medicalHistoryRepository.findById(id).isPresent()) {
-            medicalHistoryRepository.deleteById(id);
-        }
-    }
 
     /**
      * Get set of keyword founded in Notes
+     *
      * @param id
      * @return
      */
