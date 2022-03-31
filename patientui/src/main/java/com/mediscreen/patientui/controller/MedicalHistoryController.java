@@ -24,17 +24,21 @@ public class MedicalHistoryController {
     @GetMapping("/medicalhistory/findmedicalhistorybyid")
     public String findAllMedicalHistoryById(Model model,
                                             @RequestParam(value = "patientId", required = false) String patientId) {
-        List<MedicalHistoryDto> medicalHistoryDtoList;
-        medicalHistoryDtoList = patientMedicalHistoryProxy.findByPatientId(patientId);
-        model.addAttribute("medicalHistoryDtoList", medicalHistoryDtoList);
-        model.addAttribute("patientId", patientId);
-        String patientAssessment = patientAssessmentService.getAssessmentById(patientId);
-        model.addAttribute("patientAssessment", patientAssessment);
-        return "medicalhistory/findmedicalhistorybyid";
+        if ((patientId != null) && (!patientId.isEmpty()) && (!patientId.trim().isBlank())) {
+            List<MedicalHistoryDto> medicalHistoryDtoList;
+            medicalHistoryDtoList = patientMedicalHistoryProxy.findByPatientId(patientId);
+            model.addAttribute("medicalHistoryDtoList", medicalHistoryDtoList);
+            model.addAttribute("patientId", patientId);
+            String patientAssessment = patientAssessmentService.getAssessmentById(patientId);
+            model.addAttribute("patientAssessment", patientAssessment);
+            return "medicalhistory/findmedicalhistorybyid";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/medicalhistory/addmedicalhistory")
-    public String addNewPatient(Model model, @RequestParam(value = "patientId", required = false) String patientId) {
+    public String addNewMedicalHistory(Model model, @RequestParam(value = "patientId", required = false) String patientId) {
         MedicalHistoryDto medicalHistoryDto = MedicalHistoryDto.builder()
                 .patientId(patientId).build();
         model.addAttribute("medicalHistoryDto", medicalHistoryDto);
@@ -42,7 +46,7 @@ public class MedicalHistoryController {
     }
 
     @PostMapping("/medicalhistory/validate")
-    public String validatePatient(@Valid MedicalHistoryDto medicalHistoryDto, BindingResult result, Model model) {
+    public String validateMedicalHistory(@Valid MedicalHistoryDto medicalHistoryDto, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             MedicalHistoryDto newMedicalHistory = patientMedicalHistoryProxy.addMedicalHistory(medicalHistoryDto);
             return "redirect:/medicalhistory/findmedicalhistorybyid?patientId=".concat(newMedicalHistory.getPatientId());

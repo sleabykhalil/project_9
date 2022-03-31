@@ -28,7 +28,7 @@ public class PatientController {
     /**
      * CRUD : Create Patient
      *
-     * @param patientDto patient to create
+     * @param newPatient patient to create
      * @return patient after creating
      */
     @Operation(summary = "Add patient")
@@ -37,11 +37,11 @@ public class PatientController {
             @ApiResponse(responseCode = "400", description = "Patient cannot be added")
     })
     @PostMapping
-    public Patient addPatient(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Add new Patient",
+    public Patient addPatient(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "newPatient",
             required = true, content = @Content(schema = @Schema(implementation = Patient.class)))
-                              @RequestBody PatientDto patientDto) {
-        log.debug("add new patient =[{}]", patientDto.toString());
-        Patient patient = patientMapper.patientDtoToPatient(patientDto);
+                              @RequestBody PatientDto newPatient) {
+        log.debug("add new patient =[{}]", newPatient.toString());
+        Patient patient = patientMapper.patientDtoToPatient(newPatient);
         return patientService.save(patient);
     }
 
@@ -52,7 +52,7 @@ public class PatientController {
      */
     @Operation(summary = "Get patient by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New patient found successfully"),
+            @ApiResponse(responseCode = "200", description = "Patient found successfully"),
             @ApiResponse(responseCode = "400", description = "Patient cannot be found")
     })
     @GetMapping("/id")
@@ -101,34 +101,35 @@ public class PatientController {
     /**
      * CRUD : Update Patient
      *
-     * @param patientDto patients to create
+     * @param updatedPatient patients to create
      * @param id         id of patient to update
      * @return patients after creating
      */
-    @Operation(summary = "Add patient")
+    @Operation(summary = "Update patient by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Patients updated successfully"),
             @ApiResponse(responseCode = "400", description = "Patient cannot be updated")
     })
     @PutMapping("/id")
-    public Patient updatePatient(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Update Patient",
+    public Patient updatePatient(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "updatedPatient",
             required = true, content = @Content(schema = @Schema(implementation = Patient.class)))
-                                 @RequestBody PatientDto patientDto,
+                                 @RequestBody PatientDto updatedPatient,
                                  @RequestParam(name = "id")
                                  @Parameter(description = "Patient id", required = true) String id) {
-        log.debug("update patient =[{}]", patientDto.toString());
-        Patient patient = patientMapper.patientDtoToPatient(patientDto);
+        log.debug("update patient =[{}]", updatedPatient.toString());
+        Patient patient = patientMapper.patientDtoToPatient(updatedPatient);
         Patient currentPatient = patientService.getPatientById(id).orElseThrow(RuntimeException::new);
         patient.setId(currentPatient.getId());
         return patientService.save(patient);
     }
 
-    /**
-     * CRUD : Delete Patient
-     *
-     * @param id patient id to delete
-     * @return true after deleting
-     */
+    /*
+        /**
+         * CRUD : Delete Patient
+         *
+         * @param id patient id to delete
+         * @return true after deleting
+         *//*
     @Operation(summary = "Delete patient")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Patients deleted successfully"),
@@ -141,5 +142,5 @@ public class PatientController {
         Patient currentPatient = patientService.getPatientById(id).orElseThrow(RuntimeException::new);
 
         patientService.delete(id);
-    }
+    }*/
 }

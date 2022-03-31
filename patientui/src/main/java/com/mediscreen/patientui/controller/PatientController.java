@@ -87,9 +87,9 @@ public class PatientController {
         }
     }
 
-    @GetMapping("/patients/deletepatient")
+/*    @GetMapping("/patients/deletepatient")
     public String deletePatient(@RequestParam("id") String id, Model model) {
         patientProxy.deletePatient(id);
         return "redirect:findpatient";
-    }
+    }*/
 }
