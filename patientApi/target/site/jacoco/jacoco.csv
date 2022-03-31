@@ -1,0 +1,4 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+patientApi,com.mediscreen.patientApi.service.serviceImpl,PatientServiceImpl,6,38,1,1,1,6,2,5,1,5
+patientApi,com.mediscreen.patientApi.controller,PatientController,9,79,0,0,2,14,1,6,1,6
+patientApi,com.mediscreen.patientApi.controller,PatientControllerNonBrowser,0,40,0,0,0,11,0,3,0,3

@@ -102,7 +102,7 @@ public class PatientController {
      * CRUD : Update Patient
      *
      * @param updatedPatient patients to create
-     * @param id         id of patient to update
+     * @param id             id of patient to update
      * @return patients after creating
      */
     @Operation(summary = "Update patient by id")
@@ -123,24 +123,4 @@ public class PatientController {
         return patientService.save(patient);
     }
 
-    /*
-        /**
-         * CRUD : Delete Patient
-         *
-         * @param id patient id to delete
-         * @return true after deleting
-         *//*
-    @Operation(summary = "Delete patient")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Patients deleted successfully"),
-            @ApiResponse(responseCode = "400", description = "Patient cannot be deleted")
-    })
-    @DeleteMapping("/id")
-    public void deletePatient(@RequestParam(name = "id")
-                              @Parameter(description = "Patient id", required = true) String id) {
-        log.debug("Delete patients id =[{}]", id);
-        Patient currentPatient = patientService.getPatientById(id).orElseThrow(RuntimeException::new);
-
-        patientService.delete(id);
-    }*/
 }

@@ -112,15 +112,4 @@ class PatientControllerTest {
         assertThat(updatedPatient.getAddress()).isEqualTo("updated Address");
     }
 
-/*    @Test
-    void deletePatient() throws Exception {
-        //given
-        Patient patient = patientDao.save(patientMapper.patientDtoToPatient(patientDto));
-        //when
-        mockMvc.perform(delete("/patients/id")
-                        .param("id", String.valueOf(patient.getId())))
-                .andExpect(status().isOk());
-        //then
-        assertThat(patientDao.findById(patient.getId())).isNotPresent();
-    }*/
 }

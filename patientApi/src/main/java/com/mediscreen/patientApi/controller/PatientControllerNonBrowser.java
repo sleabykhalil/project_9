@@ -1,6 +1,5 @@
 package com.mediscreen.patientApi.controller;
 
-import com.mediscreen.patientApi.dto.mapper.PatientMapper;
 import com.mediscreen.patientApi.model.Patient;
 import com.mediscreen.patientApi.service.PatientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,27 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Locale;
 
 @Slf4j
 @RestController
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PatientControllerNonBrowser {
+
     final PatientService patientService;
-
-    final PatientMapper patientMapper;
-
-/*    @PostMapping(value = "/patient/addWithDto", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public ResponseEntity<String> handleNonBrowserSubmissions(NonBrowserPatientDto nonBrowserPatientDto) {
-        log.debug("add new patient by non browser =[{}]", nonBrowserPatientDto.toString());
-
-        Patient patient = patientMapper.nonBrowserPatientDtoToPatient(nonBrowserPatientDto);
-        patient = patientService.save(patient);
-        return new ResponseEntity<String>("Patient Added id=[ " + patient.getId() + " ]", HttpStatus.OK);
-    }*/
 
     @Operation(summary = "Add patient for non browser")
     @ApiResponses(value = {
@@ -53,7 +40,6 @@ public class PatientControllerNonBrowser {
             @RequestParam("phone") String phoneNumber) throws ParseException {
         log.debug("add new patient by non browser =[]");
         //map parameters to patient
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
         Patient patient = patientService.save(Patient.builder()
                 .lastName(lastName)

@@ -11,19 +11,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
 
-//    @Bean
-//    public ObjectMapper objectMapper() {
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.findAndRegisterModules();
-//        return mapper;
-//    }
     @Bean
     public ObjectMapper objectMapper() {
-        ObjectMapper mapper = JsonMapper.builder() // or different mapper for other format
+        ObjectMapper mapper = JsonMapper.builder()
                 .addModule(new ParameterNamesModule())
                 .addModule(new Jdk8Module())
                 .addModule(new JavaTimeModule())
-                // and possibly other configuration, modules, then:
                 .build();
         return mapper;
     }

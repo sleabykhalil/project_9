@@ -171,6 +171,7 @@
 						<exclude>**/model/**</exclude>
 						<exclude>**/dto/**</exclude>
 						<exclude>**/dao/**</exclude>
+						<exclude>**/PatientApiApplication.*</exclude>
 					</excludes>
 				</configuration>
 				<executions>

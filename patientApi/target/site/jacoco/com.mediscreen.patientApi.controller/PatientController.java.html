@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PatientController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">patientApi</a> &gt; <a href="index.source.html" class="el_package">com.mediscreen.patientApi.controller</a> &gt; <span class="el_source">PatientController.java</span></div><h1>PatientController.java</h1><pre class="source lang-java linenums">package com.mediscreen.patientApi.controller;
+
+import com.mediscreen.patientApi.dto.PatientDto;
+import com.mediscreen.patientApi.dto.mapper.PatientMapper;
+import com.mediscreen.patientApi.model.Patient;
+import com.mediscreen.patientApi.service.PatientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+<span class="fc" id="L18">@Slf4j</span>
+@RestController
+@RequestMapping(value = &quot;/patients&quot;)
+<span class="fc" id="L21">@RequiredArgsConstructor(onConstructor = @__(@Autowired))</span>
+public class PatientController {
+
+    final PatientService patientService;
+
+    final PatientMapper patientMapper;
+
+    /**
+     * CRUD : Create Patient
+     *
+     * @param newPatient patient to create
+     * @return patient after creating
+     */
+    @Operation(summary = &quot;Add patient&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;New patient added successfully&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Patient cannot be added&quot;)
+    })
+    @PostMapping
+    public Patient addPatient(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = &quot;newPatient&quot;,
+            required = true, content = @Content(schema = @Schema(implementation = Patient.class)))
+                              @RequestBody PatientDto newPatient) {
+<span class="fc" id="L43">        log.debug(&quot;add new patient =[{}]&quot;, newPatient.toString());</span>
+<span class="fc" id="L44">        Patient patient = patientMapper.patientDtoToPatient(newPatient);</span>
+<span class="fc" id="L45">        return patientService.save(patient);</span>
+    }
+
+    /**
+     * CRUD : Read Patient by Id
+     *
+     * @return patient by id
+     */
+    @Operation(summary = &quot;Get patient by id&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Patient found successfully&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Patient cannot be found&quot;)
+    })
+    @GetMapping(&quot;/id&quot;)
+    public Patient getPatientById(@RequestParam(name = &quot;id&quot;)
+                                  @Parameter(description = &quot;Patient id&quot;, required = true) String patientId) {
+<span class="fc" id="L61">        log.debug(&quot;Get Patient By id =[{}]&quot;, patientId);</span>
+<span class="fc" id="L62">        return patientService.getPatientById(patientId).orElseThrow(RuntimeException::new);</span>
+    }
+
+    /**
+     * CRUD : Read Patient by full name
+     *
+     * @return patient by full name
+     */
+    @Operation(summary = &quot;Get patients by full name&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Patient found successfully&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Patient cannot be found&quot;)
+    })
+    @GetMapping(&quot;/name&quot;)
+    public Patient getPatientByFullName(@RequestParam(name = &quot;firstName&quot;)
+                                        @Parameter(description = &quot;firstName&quot;, required = true) String firstName,
+                                        @RequestParam(name = &quot;lastName&quot;)
+                                        @Parameter(description = &quot;lastName&quot;, required = true) String lastName) {
+<span class="fc" id="L80">        log.debug(&quot;Get Patient By full name =[{}]&quot;, firstName + &quot; &quot; + lastName);</span>
+<span class="fc" id="L81">        return patientService.getPatientByFullName(firstName, lastName);</span>
+    }
+
+    /**
+     * CRUD : Read Patient by last name
+     *
+     * @return patient by last name
+     */
+    @Operation(summary = &quot;Get patients by last name&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Patient found successfully&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Patient cannot be found&quot;)
+    })
+    @GetMapping(&quot;/lastname&quot;)
+    public Patient getPatientByLastName(@RequestParam(name = &quot;lastName&quot;)
+                                        @Parameter(description = &quot;lastName&quot;, required = true) String lastName) {
+<span class="nc" id="L97">        log.debug(&quot;Get Patient By full name =[{}]&quot;, lastName);</span>
+<span class="nc" id="L98">        return patientService.getPatientByLastName(lastName);</span>
+    }
+
+    /**
+     * CRUD : Update Patient
+     *
+     * @param updatedPatient patients to create
+     * @param id             id of patient to update
+     * @return patients after creating
+     */
+    @Operation(summary = &quot;Update patient by id&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Patients updated successfully&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Patient cannot be updated&quot;)
+    })
+    @PutMapping(&quot;/id&quot;)
+    public Patient updatePatient(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = &quot;updatedPatient&quot;,
+            required = true, content = @Content(schema = @Schema(implementation = Patient.class)))
+                                 @RequestBody PatientDto updatedPatient,
+                                 @RequestParam(name = &quot;id&quot;)
+                                 @Parameter(description = &quot;Patient id&quot;, required = true) String id) {
+<span class="fc" id="L119">        log.debug(&quot;update patient =[{}]&quot;, updatedPatient.toString());</span>
+<span class="fc" id="L120">        Patient patient = patientMapper.patientDtoToPatient(updatedPatient);</span>
+<span class="fc" id="L121">        Patient currentPatient = patientService.getPatientById(id).orElseThrow(RuntimeException::new);</span>
+<span class="fc" id="L122">        patient.setId(currentPatient.getId());</span>
+<span class="fc" id="L123">        return patientService.save(patient);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
