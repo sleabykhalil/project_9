@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PatientServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">patientApi</a> &gt; <a href="index.source.html" class="el_package">com.mediscreen.patientApi.service.serviceImpl</a> &gt; <span class="el_source">PatientServiceImpl.java</span></div><h1>PatientServiceImpl.java</h1><pre class="source lang-java linenums">package com.mediscreen.patientApi.service.serviceImpl;
+
+import com.mediscreen.patientApi.dao.PatientDao;
+import com.mediscreen.patientApi.model.Patient;
+import com.mediscreen.patientApi.service.PatientService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+<span class="fc" id="L13">@RequiredArgsConstructor(onConstructor = @__(@Autowired))</span>
+public class PatientServiceImpl implements PatientService {
+
+    final PatientDao patientDao;
+
+    /**
+     * Add or update Patient
+     *
+     * @param patient to be add or update
+     * @return patients after add or update
+     */
+    @Override
+    public Patient save(Patient patient) {
+<span class="fc" id="L26">        return patientDao.save(patient);</span>
+    }
+
+    /**
+     * Get Patient By Id
+     *
+     * @param patientId Patient Id
+     * @return patients
+     */
+    @Override
+    public Optional&lt;Patient&gt; getPatientById(String patientId) {
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        return patientDao.findById(Long.valueOf(patientId)).isPresent() ? patientDao.findById(Long.valueOf(patientId)) : Optional.empty();</span>
+    }
+
+    /**
+     * Get patients By Full name
+     *
+     * @param firstName first name
+     * @param lastName  last name
+     * @return patients
+     */
+    @Override
+    public Patient getPatientByFullName(String firstName, String lastName) {
+<span class="fc" id="L49">        return patientDao.findPatientByFirstNameAndLastName(firstName, lastName);</span>
+    }
+
+    /**
+     * Get patients By Last name
+     *
+     * @param lastName last name
+     * @return patients
+     */
+    @Override
+    public Patient getPatientByLastName(String lastName) {
+<span class="nc" id="L60">        return patientDao.findPatientByLastName(lastName);</span>
+    }
+
+    /**
+     * Delete patient bu Id
+     *
+     * @param patientId
+     */
+    @Override
+    public void delete(String patientId) {
+<span class="fc" id="L70">        patientDao.deleteById(Long.valueOf(patientId));</span>
+<span class="fc" id="L71">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

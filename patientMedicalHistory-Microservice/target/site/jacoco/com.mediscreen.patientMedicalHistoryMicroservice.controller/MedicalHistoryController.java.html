@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MedicalHistoryController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">patientMedicalHistory-Microservice</a> &gt; <a href="index.source.html" class="el_package">com.mediscreen.patientMedicalHistoryMicroservice.controller</a> &gt; <span class="el_source">MedicalHistoryController.java</span></div><h1>MedicalHistoryController.java</h1><pre class="source lang-java linenums">package com.mediscreen.patientMedicalHistoryMicroservice.controller;
+
+import com.mediscreen.patientMedicalHistoryMicroservice.model.MedicalHistory;
+import com.mediscreen.patientMedicalHistoryMicroservice.service.MedicalHistoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Set;
+
+@RestController
+<span class="fc" id="L19">@RequiredArgsConstructor(onConstructor = @__(@Autowired))</span>
+@RequestMapping(value = &quot;/patient_medical_history&quot;)
+public class MedicalHistoryController {
+
+    private final MedicalHistoryService medicalHistoryService;
+
+    /**
+     * Add patient medical history
+     *
+     * @param medicalHistory patient medical history
+     * @return medical history with _id
+     */
+    @Operation(summary = &quot;Add medical history&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;New patient medical history added successfully&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;patient medical history cannot be added&quot;)
+    })
+    @PostMapping
+    public MedicalHistory addMedicalHistory(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = &quot;Add new patient history&quot;,
+            required = true, content = @Content(schema = @Schema(implementation = MedicalHistory.class)))
+                                            @RequestBody MedicalHistory medicalHistory) {
+<span class="fc" id="L40">        return medicalHistoryService.insert(medicalHistory);</span>
+    }
+
+    /**
+     * Find patient medical history by id
+     *
+     * @param id patient id to get medical history
+     * @return medical history by patient id
+     */
+    @Operation(summary = &quot;Get patient medical history by id&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;medical history found successfully&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;medical history cannot be found&quot;)
+    })
+    @GetMapping
+    public MedicalHistory findMedicalHistory(@RequestParam @Parameter(description = &quot;medical record id&quot;, required = true) String id) {
+<span class="fc" id="L56">        return medicalHistoryService.findById(id);</span>
+    }
+
+    /**
+     * medical history to be updated
+     *
+     * @param id             patient id to update his medical history
+     * @param medicalHistory new medical history
+     * @return updated medical history
+     */
+    @Operation(summary = &quot;Update medical history&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Medical history updated successfully&quot;),
+    })
+    @PutMapping(&quot;/id&quot;)
+    public MedicalHistory updateMedicalHistoryById(@RequestParam @Parameter(description = &quot;medical record id&quot;, required = true) String id,
+                                                   @io.swagger.v3.oas.annotations.parameters.RequestBody(description = &quot;Update patient medical history&quot;,
+                                                           required = true, content = @Content(schema = @Schema(implementation = MedicalHistory.class)))
+                                                   @RequestBody MedicalHistory medicalHistory) {
+<span class="fc" id="L75">        return medicalHistoryService.updateMedicalHistory(id, medicalHistory);</span>
+    }
+
+    @Operation(summary = &quot;Aggregate medical history&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Aggregate patient medical history successfully&quot;),
+    })
+    @GetMapping(&quot;/aggregateMedicalHistory&quot;)
+    public Set&lt;String&gt; aggregateMedicalHistory(@RequestParam String id) {
+<span class="nc" id="L84">        return medicalHistoryService.aggregateMedicalHistory(id);</span>
+    }
+
+    /**
+     * Find patient medical history by patient Id
+     *
+     * @param patientId patient id to get medical history
+     * @return medical history by patient id
+     */
+    @Operation(summary = &quot;Get medical history by patient Id&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Patient medical history found successfully&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;patient medical history cannot be found&quot;)
+    })
+    @GetMapping(&quot;/findbypatientid&quot;)
+    public List&lt;MedicalHistory&gt; findByPatientId(@RequestParam String patientId) {
+<span class="fc" id="L100">        return medicalHistoryService.findByPatientId(patientId);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

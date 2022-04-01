@@ -1,0 +1,29 @@
+##Database
+#server.port=8081
+#spring.datasource.url=jdbc:postgresql://localhost:5432/mediscreen_sql?serverTimezone=UTC
+#spring.datasource.username=admin
+#spring.datasource.password=change_me
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+#spring.datasource.initialization-mode=always
+#spring.jpa.hibernate.ddl-auto=none
+#spring.jpa.show-sql=true
+
+
+server:
+  port: 8081
+spring:
+  datasource:
+#    url: jdbc:postgresql://localhost:5432/mediscreen_sql?serverTimezone=UTC
+    url: jdbc:postgresql://db:5432/mediscreen_sql?serverTimezone=UTC
+    username: admin
+    password: change_me
+#    type: org.springframework.jdbc.datasource.SingleConnectionDataSource
+  jpa:
+    properties:
+      hibernate:
+        dialect:org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+      show-sql: true
+  application:
+    name: patients-api

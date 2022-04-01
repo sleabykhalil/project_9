@@ -1,0 +1,17 @@
+spring:
+    config:
+        activate:
+            on-profile: test
+    datasource:
+        url: jdbc:h2:mem:mediscreen_sql;Mode=PostgreSql
+        driveClassName: org.h2.Driver
+        username: admin
+        password: change_me
+#        type: org.springframework.jdbc.datasource.SingleConnectionDataSource
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.H2Dialect
+        hibernate:
+            ddl-auto: none
+        show-sql: true

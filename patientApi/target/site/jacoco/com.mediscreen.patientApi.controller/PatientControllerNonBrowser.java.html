@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PatientControllerNonBrowser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">patientApi</a> &gt; <a href="index.source.html" class="el_package">com.mediscreen.patientApi.controller</a> &gt; <span class="el_source">PatientControllerNonBrowser.java</span></div><h1>PatientControllerNonBrowser.java</h1><pre class="source lang-java linenums">package com.mediscreen.patientApi.controller;
+
+import com.mediscreen.patientApi.model.Patient;
+import com.mediscreen.patientApi.service.PatientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.text.ParseException;
+import java.time.LocalDate;
+
+<span class="fc" id="L20">@Slf4j</span>
+@RestController
+
+<span class="fc" id="L23">@RequiredArgsConstructor(onConstructor = @__(@Autowired))</span>
+public class PatientControllerNonBrowser {
+
+    final PatientService patientService;
+
+    @Operation(summary = &quot;Add patient for non browser&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;New patient added successfully&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Patient cannot be added&quot;)
+    })
+    @PostMapping(value = &quot;/patient/add&quot;, params = {&quot;family&quot;, &quot;given&quot;, &quot;dob&quot;, &quot;sex&quot;, &quot;address&quot;, &quot;phone&quot;})
+    public ResponseEntity&lt;String&gt; handleNonBrowserSubmissions(
+            @RequestParam(&quot;family&quot;) String lastName,
+            @RequestParam(&quot;given&quot;) String firstName,
+            @RequestParam(&quot;dob&quot;) String birthDate,
+            @RequestParam(&quot;sex&quot;) String gender,
+            @RequestParam(&quot;address&quot;) String address,
+            @RequestParam(&quot;phone&quot;) String phoneNumber) throws ParseException {
+<span class="fc" id="L41">        log.debug(&quot;add new patient by non browser =[]&quot;);</span>
+        //map parameters to patient
+
+<span class="fc" id="L44">        Patient patient = patientService.save(Patient.builder()</span>
+<span class="fc" id="L45">                .lastName(lastName)</span>
+<span class="fc" id="L46">                .firstName(firstName)</span>
+<span class="fc" id="L47">                .gender(gender)</span>
+<span class="fc" id="L48">                .address(address)</span>
+<span class="fc" id="L49">                .birthDate(LocalDate.parse(birthDate))</span>
+<span class="fc" id="L50">                .phoneNumber(phoneNumber).build());</span>
+<span class="fc" id="L51">        return new ResponseEntity&lt;String&gt;(&quot;Patient Added id=[ &quot; + patient.getId() + &quot; ]&quot;, HttpStatus.OK);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

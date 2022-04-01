@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MedicalHistoryControllerNonBrowser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">patientMedicalHistory-Microservice</a> &gt; <a href="index.source.html" class="el_package">com.mediscreen.patientMedicalHistoryMicroservice.controller</a> &gt; <span class="el_source">MedicalHistoryControllerNonBrowser.java</span></div><h1>MedicalHistoryControllerNonBrowser.java</h1><pre class="source lang-java linenums">package com.mediscreen.patientMedicalHistoryMicroservice.controller;
+
+import com.mediscreen.patientMedicalHistoryMicroservice.model.MedicalHistory;
+import com.mediscreen.patientMedicalHistoryMicroservice.service.MedicalHistoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+<span class="fc" id="L15">@RequiredArgsConstructor(onConstructor = @__(@Autowired))</span>
+public class MedicalHistoryControllerNonBrowser {
+
+    private final MedicalHistoryService medicalHistoryService;
+    @Operation(summary = &quot;Add medical history non browser&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;New patient medical history added successfully&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;patient medical history cannot be added&quot;)
+    })
+    @PostMapping(value = &quot;/patHistory/add&quot;, params = {&quot;patId&quot;, &quot;e&quot;})
+    public MedicalHistory addMedicalHistory(@RequestParam(&quot;patId&quot;) String patientId,
+                                            @RequestParam(&quot;e&quot;) String notes) {
+<span class="fc" id="L27">        MedicalHistory medicalHistory = MedicalHistory.builder()</span>
+<span class="fc" id="L28">                .patientId(patientId)</span>
+<span class="fc" id="L29">                .notes(notes).build();</span>
+<span class="fc" id="L30">        return medicalHistoryService.insert(medicalHistory);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
