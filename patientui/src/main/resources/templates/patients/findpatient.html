@@ -19,15 +19,12 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id=""> input [Id] or [first and last name]</span>
             </div>
-            <input class="form-control" placeholder="Patient Id" th:name="patientId"  type="number">
-            <input class="form-control" placeholder="prénom" th:name="patientFirstname"  type="text">
+            <input class="form-control" placeholder="Patient Id" th:name="patientId" type="number">
+            <input class="form-control" placeholder="prénom" th:name="patientFirstname" type="text">
             <input class="form-control" placeholder="nom" th:name="patientLastName" type="text">
             <input class="form-control" type="submit">
             <div class="input-group-append">
 
-                <!--                <a class="btn btn-outline-secondary"-->
-                <!--                   th:href="@{/patients/findpatient(patientId=${patientId}, patientFirstname=${patientFirstname}, patientLastName=${patientLastName})}"-->
-                <!--                   type="button">Search</a>-->
             </div>
         </div>
     </form>
@@ -54,49 +51,14 @@
 
                 <td>
                     <a role="button" th:href="@{/patients/updatepatient(id=${patientDto.id})}">Edit</a> |
-<!--                    <a role="button" th:href="@{/patients/deletepatient(id=${patientDto.id})}" >Delete</a></td>-->
-                    <a href="#" role="button" >Delete</a></td>
+                    <a href="#" role="button">Delete</a></td>
                 <td>
-                    <a role="button" th:href="@{/medicalhistory/findmedicalhistorybyid(patientId=${patientDto.id})}">Medical history</a></td>
+                    <a role="button" th:href="@{/medicalhistory/findmedicalhistorybyid(patientId=${patientDto.id})}">Medical
+                        history</a></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <!--    <form class="px-4 py-3" th:action="@{patients/findPatient}" th:object="${patientDto}" method="POST">-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="firstName">first Name </label>-->
-    <!--            <input type="text" id="firstName" name="firstName" th:field="*{firstName}" class="form-control"-->
-    <!--                   placeholder="first name">-->
-    <!--        </div>-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="lastName">last Name</label>-->
-    <!--            <input type="text" id="lastName" name="lastName" th:field="*{lastName}" class="form-control"-->
-    <!--                   placeholder="Sleaby">-->
-    <!--        </div>-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="birthDate">Birth date</label>-->
-    <!--            <input type="date" id="birthDate" name="birthDate" th:field="*{birthDate}" class="form-control"-->
-    <!--                   placeholder="yyyy-mm-dd">-->
-    <!--        </div>-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="gender">Email address</label>-->
-    <!--            <input type="text" id="gender" name="gender" th:field="*{gender}" class="form-control"-->
-    <!--                   placeholder="male - female ...">-->
-    <!--        </div>-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="address">address</label>-->
-    <!--            <input type="text" id="address" name="address" th:field="*{address}" class="form-control"-->
-    <!--                   placeholder="address">-->
-    <!--        </div>-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="phoneNumber">address</label>-->
-    <!--            <input type="text" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" class="form-control"-->
-    <!--                   placeholder="phoneNumber">-->
-    <!--        </div>-->
-    <!--        <button type="reset" class="btn btn-primary">Cancel</button>-->
-    <!--        <button type="submit" class="btn btn-primary">Add Patient</button>-->
-    <!--    </form>-->
-
 
 </div>
 

@@ -35,9 +35,7 @@
             <p class="text-danger" th:errors="*{birthDate}" th:if="${#fields.hasErrors('birthDate')}"></p>
         </div>
         <div class="form-group">
-            <!--            <label for="gender">Gender</label>
-                        <input class="form-control" id="gender" name="gender" placeholder="M/F" th:field="*{gender}"
-                               type="text">-->
+
             <div class="form-check">
                 <input class="form-check-input" id="Man" name="Man" th:field="*{gender}" type="radio" value="M">
                 <label class="form-check-label" for="Man">

@@ -18,11 +18,12 @@ public class PatientAssessment {
     private final MicroservicePatientProxy patientProxy;
     private final PatientMedicalHistoryProxy medicalHistoryProxy;
 
-    public String getAssessmentById(String patientId){
+    public String getAssessmentById(String patientId) {
         PatientDto patientDto = patientProxy.getPatientById(patientId);
         Set<String> patientSetOfKeyWord = medicalHistoryProxy.aggregateMedicalHistory(patientDto.getId().toString());
         return getAssessment(patientDto, patientSetOfKeyWord);
     }
+
     public String getAssessment(PatientDto patientDto, Set<String> patientSetOfKeyWord) {
 
         if (patientDto.getGender().equals("M")) {
@@ -144,11 +145,6 @@ public class PatientAssessment {
     }
 
     private int getAge(LocalDate birthDate) {
-//        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-//        int d1 = Integer.parseInt(formatter.format(birthDate));
-//        int d2 = Integer.parseInt(formatter.format(new Date()));
-//        int age = (d1 - d2) / 10000;
         return Math.abs(Period.between(birthDate, LocalDate.now()).getYears());
-//        return Math.abs(age);
     }
 }

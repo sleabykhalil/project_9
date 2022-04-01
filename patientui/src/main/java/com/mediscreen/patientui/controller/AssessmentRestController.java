@@ -21,7 +21,7 @@ public class AssessmentRestController {
 
     private final MicroservicePatientProxy patientProxy;
     private final PatientMedicalHistoryProxy medicalHistoryProxy;
-    private final PatientAssessment patientAssessment;
+    private final PatientAssessment patientAssessmentService;
 
     @Operation(summary = "Get assessment by patient Id")
     @ApiResponses(value = {
@@ -32,7 +32,7 @@ public class AssessmentRestController {
 
         PatientDto patientDto = patientProxy.getPatientById(patientId);
         Set<String> patientSetOfKeyWord = medicalHistoryProxy.aggregateMedicalHistory(patientDto.getId().toString());
-        return patientAssessment.getAssessment(patientDto, patientSetOfKeyWord);
+        return patientAssessmentService.getAssessment(patientDto, patientSetOfKeyWord);
     }
 
     @Operation(summary = "Get assessment by patient family name")
@@ -45,7 +45,7 @@ public class AssessmentRestController {
         PatientDto patientDto = patientProxy.getPatientByLastName(lastName.trim());
         if (patientDto != null) {
             Set<String> patientSetOfKeyWord = medicalHistoryProxy.aggregateMedicalHistory(patientDto.getId().toString());
-            return patientAssessment.getAssessment(patientDto, patientSetOfKeyWord);
+            return patientAssessmentService.getAssessment(patientDto, patientSetOfKeyWord);
         }
         return "patient not found";
     }

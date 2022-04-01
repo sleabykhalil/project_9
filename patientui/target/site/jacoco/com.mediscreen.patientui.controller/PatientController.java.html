@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PatientController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">patient-ui</a> &gt; <a href="index.source.html" class="el_package">com.mediscreen.patientui.controller</a> &gt; <span class="el_source">PatientController.java</span></div><h1>PatientController.java</h1><pre class="source lang-java linenums">package com.mediscreen.patientui.controller;
+
+import com.mediscreen.patientui.dto.PatientDto;
+import com.mediscreen.patientui.proxies.MicroservicePatientProxy;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+<span class="fc" id="L19">@RequiredArgsConstructor(onConstructor = @__(@Autowired))</span>
+public class PatientController {
+
+    final MicroservicePatientProxy patientProxy;
+
+    @GetMapping(&quot;/&quot;)
+    public String home(Model model) {
+<span class="fc" id="L26">        return &quot;home&quot;;</span>
+    }
+
+    @GetMapping(&quot;/patients/findpatient&quot;)
+    public String findPatient(Model model,
+                              @RequestParam(value = &quot;patientId&quot;, required = false) String patientId,
+                              @RequestParam(value = &quot;patientFirstname&quot;, required = false) String patientFirstname,
+                              @RequestParam(value = &quot;patientLastName&quot;, required = false) String patientLastName) {
+
+<span class="fc" id="L35">        List&lt;PatientDto&gt; patientDtoList = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L36" title="3 of 6 branches missed.">        if ((patientId != null) &amp;&amp; (!patientId.isEmpty()) &amp;&amp; (!patientId.trim().isBlank())) {</span>
+<span class="fc" id="L37">            PatientDto patientDto = patientProxy.getPatientById(patientId);</span>
+<span class="fc" id="L38">            addIfNotnullOrNotExist(patientDtoList, patientDto);</span>
+        }
+<span class="pc bpc" id="L40" title="2 of 4 branches missed.">        if ((patientFirstname != null) &amp;&amp; (patientLastName != null) &amp;&amp;</span>
+<span class="pc bpc" id="L41" title="2 of 4 branches missed.">                (!patientFirstname.isBlank()) &amp;&amp; (!patientLastName.isBlank())) {</span>
+<span class="fc" id="L42">            PatientDto patientDto = patientProxy.getPatientByFullName(patientFirstname, patientLastName);</span>
+<span class="fc" id="L43">            addIfNotnullOrNotExist(patientDtoList, patientDto);</span>
+        }
+<span class="fc" id="L45">        model.addAttribute(&quot;patientDtoList&quot;, patientDtoList);</span>
+<span class="fc" id="L46">        return &quot;patients/findpatient&quot;;</span>
+    }
+
+    private void addIfNotnullOrNotExist(List&lt;PatientDto&gt; patientDtoList, PatientDto patientDto) {
+<span class="pc bpc" id="L50" title="1 of 4 branches missed.">        if (patientDto != null &amp;&amp; !patientDtoList.contains(patientDto)) {</span>
+<span class="fc" id="L51">            patientDtoList.add(patientDto);</span>
+        }
+<span class="fc" id="L53">    }</span>
+
+    @GetMapping(&quot;/patients/addpatient&quot;)
+    public String addNewPatient(PatientDto patientDto) {
+<span class="fc" id="L57">        return &quot;patients/addpatient&quot;;</span>
+    }
+
+    @PostMapping(&quot;/patients/validate&quot;)
+    public String validatePatient(@Valid PatientDto patientDto, BindingResult result, Model model) {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (!result.hasErrors()) {</span>
+<span class="fc" id="L63">            PatientDto newPatientDto = patientProxy.addPatient(patientDto);</span>
+<span class="fc" id="L64">            return &quot;redirect:findpatient?patientId=&quot;.concat(newPatientDto.getId().toString());</span>
+        } else {
+<span class="fc" id="L66">            return &quot;patients/addpatient&quot;;</span>
+        }
+    }
+
+    @GetMapping(&quot;/patients/updatepatient&quot;)
+    public String getUpdatePatientForm(@RequestParam(name = &quot;id&quot;) String id, Model model) {
+<span class="nc" id="L72">        PatientDto patientDto = patientProxy.getPatientById(id);</span>
+<span class="nc" id="L73">        model.addAttribute(&quot;patientDto&quot;, patientDto);</span>
+<span class="nc" id="L74">        return &quot;patients/updatepatient&quot;;</span>
+    }
+
+    @PostMapping(&quot;/patients/updatepatient&quot;)
+    public String updatePatient(@RequestParam(name = &quot;id&quot;) String id,
+                                @Valid PatientDto patientDto,
+                                BindingResult result,
+                                Model model) {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (!result.hasErrors()) {</span>
+<span class="nc" id="L83">            PatientDto newPatientDto = patientProxy.updatePatient(patientDto, id);</span>
+<span class="nc" id="L84">            return &quot;redirect:findpatient?patientId=&quot;.concat(newPatientDto.getId().toString());</span>
+        } else {
+<span class="nc" id="L86">            return &quot;patients/updatepatient?patientId=&quot;.concat(id);</span>
+        }
+    }
+
+/*    @GetMapping(&quot;/patients/deletepatient&quot;)
+    public String deletePatient(@RequestParam(&quot;id&quot;) String id, Model model) {
+        patientProxy.deletePatient(id);
+        return &quot;redirect:findpatient&quot;;
+    }*/
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
