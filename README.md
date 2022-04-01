@@ -76,5 +76,8 @@ Ou sur windows OS
 127.0.0.1 microservice.patientui
 ```
 
+# Patient UI Architectural Overview
 
+
+![Patient UI Architectural Overview](https://user-images.githubusercontent.com/64974948/161336947-1eb396a2-698d-41c8-902e-31edf99bdc1b.png)
 
