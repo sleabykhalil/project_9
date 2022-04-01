@@ -8,8 +8,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MedicalHistoryControllerTest {
@@ -28,40 +30,36 @@ class MedicalHistoryControllerTest {
         MedicalHistory medicalHistory = MedicalHistory.builder().id("test").build();
         when(medicalHistoryServiceMock.insert(medicalHistory)).thenReturn(medicalHistory);
         MedicalHistory result = medicalHistoryControllerUnderTest.addMedicalHistory(medicalHistory);
+        verify(medicalHistoryServiceMock, times(1)).insert(medicalHistory);
         assertThat(result).isEqualTo(medicalHistory);
     }
-
-//    @Test
-//    void findAllMedicalHistory() {
-//        List<MedicalHistory> medicalHistoryList = new ArrayList<>();
-//        when(medicalHistoryServiceMock.getAllMedicalHistory()).thenReturn(medicalHistoryList);
-//        List<MedicalHistory> result = medicalHistoryControllerUnderTest.findAllMedicalHistory();
-//        assertThat(result).isEqualTo(medicalHistoryList);
-//    }
 
     @Test
     void findMedicalHistory() {
         MedicalHistory medicalHistory = MedicalHistory.builder()
                 .id("test").build();
         when(medicalHistoryServiceMock.findById("test")).thenReturn(medicalHistory);
-        MedicalHistory result =medicalHistoryControllerUnderTest.findMedicalHistory("test");
+        MedicalHistory result = medicalHistoryControllerUnderTest.findMedicalHistory("test");
+        verify(medicalHistoryServiceMock, times(1)).findById("test");
         assertThat(result).isEqualTo(medicalHistory);
     }
 
-//    @Test
-//    void updateMedicalHistory() {
-//        MedicalHistory medicalHistory= MedicalHistory.builder()
-//                .id("Test").build();
-//        MedicalHistory updatedMedicalHistory= MedicalHistory.builder()
-//                .id("test2").build();
-//        when(medicalHistoryServiceMock.updateMedicalHistory("test2",medicalHistory)).thenReturn(updatedMedicalHistory);
-//        medicalHistoryControllerUnderTest.updateMedicalHistory("test2",medicalHistory);
-//    }
+    @Test
+    void updateMedicalHistoryById() {
+        MedicalHistory medicalHistory = MedicalHistory.builder()
+                .id("test").build();
+        when(medicalHistoryServiceMock.updateMedicalHistory("test", medicalHistory)).thenReturn(medicalHistory);
+        MedicalHistory result = medicalHistoryControllerUnderTest.updateMedicalHistoryById("test", medicalHistory);
+        verify(medicalHistoryServiceMock, times(1)).updateMedicalHistory("test", medicalHistory);
+    }
 
-//    @Test
-//    void deleteMedicalHistory() {
-//        doNothing().when(medicalHistoryServiceMock).deleteMedicalHistory("Test");
-//        medicalHistoryControllerUnderTest.deleteMedicalHistory("Test");
-//        verify(medicalHistoryServiceMock,times(1)).deleteMedicalHistory("Test");
-//    }
+    @Test
+    void findByPatientId() {
+        MedicalHistory medicalHistory = MedicalHistory.builder()
+                .id("test").build();
+        List<MedicalHistory> medicalHistoryList = List.of(medicalHistory);
+        when(medicalHistoryServiceMock.findByPatientId("test")).thenReturn(medicalHistoryList);
+        medicalHistoryControllerUnderTest.findByPatientId("test");
+        verify(medicalHistoryServiceMock, times(1)).findByPatientId("test");
+    }
 }

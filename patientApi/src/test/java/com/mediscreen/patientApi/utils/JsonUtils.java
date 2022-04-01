@@ -13,9 +13,6 @@ public class JsonUtils {
 
     public String asJsonString(Object obj) throws JsonProcessingException {
 
-/*        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);*/
         ObjectMapper mapper = JsonMapper.builder() // or different mapper for other format
                 .addModule(new ParameterNamesModule())
                 .addModule(new Jdk8Module())

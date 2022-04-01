@@ -70,7 +70,7 @@ class PatientControllerTestIT {
                 .firstName("test2")
                 .lastName("test")
                 .birthDate(LocalDate.parse("2020-10-10"))
-                        .                build();
+                .build();
         //when
         when(microservicePatientProxyMock.getPatientById("1")).thenReturn(patientDto1);
         when(microservicePatientProxyMock.getPatientByFullName("test2", "test")).thenReturn(patientDto2);
@@ -120,6 +120,7 @@ class PatientControllerTestIT {
                 .id(1L)
                 .firstName("test")
                 .lastName("test")
+                .gender("M")
                 .birthDate(LocalDate.parse("2020-10-10"))
                 .build();
         //when

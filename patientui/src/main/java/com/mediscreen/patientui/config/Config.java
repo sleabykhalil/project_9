@@ -11,12 +11,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
 
-//    @Bean
-//    public ObjectMapper objectMapper() {
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.findAndRegisterModules();
-//        return mapper;
-//    }
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = JsonMapper.builder() // or different mapper for other format

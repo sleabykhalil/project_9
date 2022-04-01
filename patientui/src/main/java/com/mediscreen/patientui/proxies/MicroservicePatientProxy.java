@@ -23,7 +23,4 @@ public interface MicroservicePatientProxy {
     @PutMapping("/patients/id")
     PatientDto updatePatient(@RequestBody PatientDto patientDto, @RequestParam(name = "id") String id);
 
-/*    @DeleteMapping("/patients/id")
-    void deletePatient(@RequestParam(name = "id") String patientId);*/
-
 }

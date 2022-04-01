@@ -64,11 +64,11 @@ public class MedicalHistoryController {
 
     @PostMapping("/medicalhistory/updatemedicalhistory")
     public String updatePatient(@RequestParam(name = "id") String id,
-                                @Valid  MedicalHistoryDto medicalHistoryDto,
+                                @Valid MedicalHistoryDto medicalHistoryDto,
                                 BindingResult result,
                                 Model model) {
         if (!result.hasErrors()) {
-            MedicalHistoryDto newMedicalHistoryDto = patientMedicalHistoryProxy.updateMedicalHistoryById(id,medicalHistoryDto);
+            MedicalHistoryDto newMedicalHistoryDto = patientMedicalHistoryProxy.updateMedicalHistoryById(id, medicalHistoryDto);
             return "redirect:findmedicalhistorybyid?patientId=".concat(newMedicalHistoryDto.getPatientId());
         } else {
             return "medicalhistory/updatemedicalhistory?id=".concat(id);

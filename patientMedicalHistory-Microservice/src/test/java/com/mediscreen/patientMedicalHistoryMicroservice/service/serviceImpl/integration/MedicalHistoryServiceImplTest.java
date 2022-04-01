@@ -17,8 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
-
-//@SpringBootTest
 class MedicalHistoryServiceImplTest {
 
     @Autowired

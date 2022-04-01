@@ -22,7 +22,6 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-<!--                <th>Patient Id</th>-->
                 <th>Notes</th>
                 <th>Action</th>
 
@@ -34,7 +33,8 @@
                 <td style="display:none" th:text="${medicalHistoryDto.patientId}"></td>
                 <td style="white-space : break-spaces" th:text="${medicalHistoryDto.notes}">Notes</td>
                 <td>
-                    <a role="button" th:href="@{/medicalhistory/updatemedicalhistory(id=${medicalHistoryDto.id})}">Edit</a> |
+                    <a role="button"
+                       th:href="@{/medicalhistory/updatemedicalhistory(id=${medicalHistoryDto.id})}">Edit</a> |
                     <a href="#" role="button">Delete</a></td>
                 <td>
 
@@ -43,41 +43,6 @@
         <a class="btn btn-primary" th:href="@{/patients/findpatient}"> Return</a>
 
     </div>
-    <!--    <form class="px-4 py-3" th:action="@{patients/findPatient}" th:object="${patientDto}" method="POST">-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="firstName">first Name </label>-->
-    <!--            <input type="text" id="firstName" name="firstName" th:field="*{firstName}" class="form-control"-->
-    <!--                   placeholder="first name">-->
-    <!--        </div>-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="lastName">last Name</label>-->
-    <!--            <input type="text" id="lastName" name="lastName" th:field="*{lastName}" class="form-control"-->
-    <!--                   placeholder="Sleaby">-->
-    <!--        </div>-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="birthDate">Birth date</label>-->
-    <!--            <input type="date" id="birthDate" name="birthDate" th:field="*{birthDate}" class="form-control"-->
-    <!--                   placeholder="yyyy-mm-dd">-->
-    <!--        </div>-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="gender">Email address</label>-->
-    <!--            <input type="text" id="gender" name="gender" th:field="*{gender}" class="form-control"-->
-    <!--                   placeholder="male - female ...">-->
-    <!--        </div>-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="address">address</label>-->
-    <!--            <input type="text" id="address" name="address" th:field="*{address}" class="form-control"-->
-    <!--                   placeholder="address">-->
-    <!--        </div>-->
-    <!--        <div class="form-group">-->
-    <!--            <label for="phoneNumber">address</label>-->
-    <!--            <input type="text" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" class="form-control"-->
-    <!--                   placeholder="phoneNumber">-->
-    <!--        </div>-->
-    <!--        <button type="reset" class="btn btn-primary">Cancel</button>-->
-    <!--        <button type="submit" class="btn btn-primary">Add Patient</button>-->
-    <!--    </form>-->
-
 
 </div>
 
