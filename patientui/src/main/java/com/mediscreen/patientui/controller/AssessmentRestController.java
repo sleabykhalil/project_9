@@ -27,8 +27,8 @@ public class AssessmentRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Assessment found successfully"),
     })
-    @PostMapping(value = "/assess/id", params = {"id"})
-    public String getAssessmentById(@RequestParam("id") String patientId) {
+    @PostMapping(value = "/assess/id", params = {"patId"})
+    public String getAssessmentById(@RequestParam("patId") String patientId) {
 
         PatientDto patientDto = patientProxy.getPatientById(patientId);
         Set<String> patientSetOfKeyWord = medicalHistoryProxy.aggregateMedicalHistory(patientDto.getId().toString());
