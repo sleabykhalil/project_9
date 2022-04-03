@@ -45,7 +45,7 @@ class AssessmentRestControllerTest {
         when(patientAssessmentServiceMock.getAssessment(patientDto, aggregateSet)).thenReturn("test assessment");
 
         mockMvc.perform(post("/assess/id")
-                .param("id", "1")).andExpect(status().isOk());
+                .param("patId", "1")).andExpect(status().isOk());
 
     }
 
